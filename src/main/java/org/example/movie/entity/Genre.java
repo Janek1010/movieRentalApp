@@ -3,6 +3,7 @@ package org.example.movie.entity;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,6 @@ public class Genre implements Serializable {
     private String name;
     private String description;
     private Double popularityScore;
+    @Singular
+    private List<Movie> movies;
 }
