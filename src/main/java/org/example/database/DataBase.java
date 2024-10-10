@@ -17,10 +17,6 @@ public class DataBase {
 
     public DataBase(CloningUtility cloningUtility) {
         this.cloningUtility = cloningUtility;
-        users.add(User.builder().id(UUID.randomUUID()).email("example@org").username("jurek").registrationDate(LocalDate.now()).build());
-        users.add(User.builder().id(UUID.randomUUID()).email("example@com").username("marek").registrationDate(LocalDate.now()).build());
-        users.add(User.builder().id(UUID.randomUUID()).email("plexa@moc").username("jarek").registrationDate(LocalDate.now()).build());
-        users.add(User.builder().id(UUID.randomUUID()).email("klexa@gor").username("mirek").registrationDate(LocalDate.now()).build());
     }
 
     public synchronized List<User> findAllUsers(){
@@ -34,5 +30,12 @@ public class DataBase {
                 .findFirst()
                 .map(cloningUtility::clone)
                 .orElse(null);
+    }
+
+    public synchronized void createUser(User entity) {
+        if (users.stream().anyMatch(user -> user.getId().equals(entity.getId()))){
+            throw new IllegalArgumentException("This id is used!");
+        }
+        users.add(cloningUtility.clone(entity));
     }
 }

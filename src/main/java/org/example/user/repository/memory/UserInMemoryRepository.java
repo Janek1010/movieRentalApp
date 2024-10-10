@@ -24,4 +24,9 @@ public class UserInMemoryRepository implements UserRepository {
     public List<User> findAll() {
         return dataBase.findAllUsers();
     }
+
+    @Override
+    public void create(User entity) {
+        dataBase.createUser(entity);
+    }
 }

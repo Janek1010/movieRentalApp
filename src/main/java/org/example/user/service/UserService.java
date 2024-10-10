@@ -16,4 +16,5 @@ public class UserService {
 
     public Optional<User> find(UUID uuid) { return userRepository.find(uuid);}
     public List<User> findAllUsers() { return userRepository.findAll();}
+    public void createUser(User user){ userRepository.create(user);}
 }

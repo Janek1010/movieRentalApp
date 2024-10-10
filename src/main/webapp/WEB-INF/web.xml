@@ -5,16 +5,15 @@
          version="6.0"
          metadata-complete="false">
 
-<!--    <listener>-->
-<!--        <listener-class>pl.edu.pg.eti.kask.rpg.configuration.listener.CreateDataSource</listener-class>-->
-<!--    </listener>-->
+    <listener>
+        <listener-class>org.example.config.listener.CreateDataBase</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.example.config.listener.CreateServices</listener-class>
+    </listener>
 
-<!--    <listener>-->
-<!--        <listener-class>pl.edu.pg.eti.kask.rpg.configuration.listener.CreateServices</listener-class>-->
-<!--    </listener>-->
-
-<!--    <listener>-->
-<!--        <listener-class>pl.edu.pg.eti.kask.rpg.configuration.listener.CreateControllers</listener-class>-->
-<!--    </listener>-->
+    <listener>
+        <listener-class>org.example.config.listener.CreateControllers</listener-class>
+    </listener>
 
 </web-app>
