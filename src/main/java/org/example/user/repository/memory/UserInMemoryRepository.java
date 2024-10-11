@@ -29,4 +29,14 @@ public class UserInMemoryRepository implements UserRepository {
     public void create(User entity) {
         dataBase.createUser(entity);
     }
+
+    @Override
+    public void delete(User entity) {
+        dataBase.deleteUser(entity.getId());
+    }
+
+    @Override
+    public void update(User entity) {
+        dataBase.updateUser(entity);
+    }
 }

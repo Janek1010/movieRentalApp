@@ -22,4 +22,8 @@ public class User implements Serializable {
     private String email;
     @Singular
     private List<Movie> movies;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private byte[] avatar;
 }

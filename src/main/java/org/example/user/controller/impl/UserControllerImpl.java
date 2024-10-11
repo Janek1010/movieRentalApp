@@ -5,8 +5,10 @@ import org.example.factories.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;
 import org.example.user.dto.GetUsersResponse;
+import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 public class UserControllerImpl implements UserController {
@@ -29,5 +31,22 @@ public class UserControllerImpl implements UserController {
         return userService.find(uuid)
                 .map(factory.userToResponse())
                 .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public byte[] getUserAvatar(UUID id) {
+        return userService.find(id)
+                .map(User::getAvatar)
+                .orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public void putUserAvatar(UUID id, InputStream avatar) {
+        userService.find(id).ifPresentOrElse(
+                entity -> userService.updateAvatar(id, avatar),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
 }

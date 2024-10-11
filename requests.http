@@ -7,3 +7,9 @@ GET http://localhost:9082/movieRental/api/users
 # Get single user.
 
 GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+
+###
+
+# Get single user avatar.
+
+GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/portrait

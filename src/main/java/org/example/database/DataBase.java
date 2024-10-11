@@ -38,4 +38,18 @@ public class DataBase {
         }
         users.add(cloningUtility.clone(entity));
     }
+
+    public synchronized void deleteUser(UUID id) {
+        if (!users.removeIf(user -> user.getId().equals(id))) {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(id));
+        }
+    }
+
+    public synchronized void updateUser(User entity) {
+        if (users.removeIf(user -> user.getId().equals(entity.getId()))) {
+            users.add(cloningUtility.clone(entity));
+        } else {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
 }
