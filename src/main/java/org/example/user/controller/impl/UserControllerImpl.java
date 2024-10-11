@@ -1,6 +1,6 @@
 package org.example.user.controller.impl;
 
-import jakarta.ws.rs.NotFoundException;
+import org.example.controller.servlet.exception.NotFoundException;
 import org.example.factories.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;
@@ -25,6 +25,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public GetUserResponse getUser(UUID uuid) {
+        System.out.println(userService.find(uuid));
         return userService.find(uuid)
                 .map(factory.userToResponse())
                 .orElseThrow(NotFoundException::new);

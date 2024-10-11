@@ -2,10 +2,17 @@ package org.example.controller.servlet;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.user.controller.api.UserController;
 
+import java.io.IOException;
+import java.util.UUID;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @WebServlet(
@@ -13,6 +20,7 @@ import java.util.regex.Pattern;
                 ApiServlet.Paths.API +"/*"
         }
 )
+@MultipartConfig(maxFileSize = 200 * 1024)
 public class ApiServlet extends HttpServlet {
     private UserController userController;
 
@@ -27,5 +35,40 @@ public class ApiServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();
 
-    // dokonczyc ten servlet i jeszcze ta obsluga bledow i testowac wtedy
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        userController = (UserController) getServletContext().getAttribute("userController");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = parseRequestPath(request);
+        String servletPath = request.getServletPath();
+        if (Paths.API.equals(servletPath)) {
+            if (path.matches(Patterns.USERS.pattern())) {
+                response.setContentType("application/json");
+                response.getWriter().write(jsonb.toJson(userController.getUsers()));
+                return;
+            } else if (path.matches(Patterns.USER.pattern())) {
+                response.setContentType("application/json");
+                UUID uuid = extractUuid(Patterns.USER, path);
+                response.getWriter().write(jsonb.toJson(userController.getUser(uuid)));
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    }
+    private String parseRequestPath(HttpServletRequest request) {
+        String path = request.getPathInfo();
+        path = path != null ? path : "";
+        return path;
+    }
+    private static UUID extractUuid(Pattern pattern, String path) {
+        Matcher matcher = pattern.matcher(path);
+        if (matcher.matches()) {
+            return UUID.fromString(matcher.group(1));
+        }
+        throw new IllegalArgumentException("No UUID.");
+    }
 }

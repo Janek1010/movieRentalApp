@@ -19,7 +19,7 @@ public class DataInitialization implements ServletContextListener {
         init();
     }
     private void init(){
-        User jurek = User.builder().id(UUID.randomUUID()).email("example@org").username("jurek").registrationDate(LocalDate.now()).build();
+        User jurek = User.builder().id(UUID.fromString("525d3e7b-bb1f-4c13-bf17-926d1a12e4c0")).email("example@org").username("jurek").registrationDate(LocalDate.now()).build();
         User marek = User.builder().id(UUID.randomUUID()).email("example@pl").username("marek").registrationDate(LocalDate.now()).build();
         User krzysztof = User.builder().id(UUID.randomUUID()).email("example@com").username("krzysztof").registrationDate(LocalDate.now()).build();
         User franek = User.builder().id(UUID.randomUUID()).email("org@example").username("franek").registrationDate(LocalDate.now()).build();
