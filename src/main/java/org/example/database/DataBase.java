@@ -21,14 +21,9 @@ public class DataBase {
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
 
-    public DataBase(CloningUtility cloningUtility) {
+    public DataBase(CloningUtility cloningUtility, Path avatarDirectory) {
         this.cloningUtility = cloningUtility;
-        try {
-            avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
-        } catch (
-                URISyntaxException e) {
-            throw new RuntimeException("Could not resolve avatar directory", e);
-        }
+        this.avatarDirectory = avatarDirectory;
     }
 
     public synchronized List<User> findAllUsers(){

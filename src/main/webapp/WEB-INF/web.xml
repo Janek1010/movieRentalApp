@@ -4,7 +4,9 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0"
          metadata-complete="false">
-
+    <listener>
+        <listener-class>org.example.config.listener.CreateResource</listener-class>
+    </listener>
     <listener>
         <listener-class>org.example.config.listener.CreateDataBase</listener-class>
     </listener>
