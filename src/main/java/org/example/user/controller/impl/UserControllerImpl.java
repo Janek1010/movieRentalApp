@@ -33,20 +33,4 @@ public class UserControllerImpl implements UserController {
                 .orElseThrow(NotFoundException::new);
     }
 
-    @Override
-    public byte[] getUserAvatar(UUID id) {
-        return userService.find(id)
-                .map(User::getAvatar)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    @Override
-    public void putUserAvatar(UUID id, InputStream avatar) {
-        userService.find(id).ifPresentOrElse(
-                entity -> userService.updateAvatar(id, avatar),
-                () -> {
-                    throw new NotFoundException();
-                }
-        );
-    }
 }

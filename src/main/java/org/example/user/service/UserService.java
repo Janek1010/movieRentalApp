@@ -20,14 +20,4 @@ public class UserService {
     public List<User> findAllUsers() { return userRepository.findAll();}
     public void createUser(User user){ userRepository.create(user);}
 
-    public void updateAvatar(UUID id, InputStream is) {
-        userRepository.find(id).ifPresent(user -> {
-            try {
-                user.setAvatar(is.readAllBytes());
-                userRepository.update(user);
-            } catch (IOException ex) {
-                throw new IllegalStateException(ex);
-            }
-        });
-    }
 }

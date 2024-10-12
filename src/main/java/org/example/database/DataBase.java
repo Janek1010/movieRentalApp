@@ -3,6 +3,11 @@ package org.example.database;
 import org.example.Util.CloningUtility;
 import org.example.user.entity.User;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -14,9 +19,16 @@ public class DataBase {
     private final Set<User> users = new HashSet<>();
 
     private final CloningUtility cloningUtility;
+    private final Path avatarDirectory;
 
     public DataBase(CloningUtility cloningUtility) {
         this.cloningUtility = cloningUtility;
+        try {
+            avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
+        } catch (
+                URISyntaxException e) {
+            throw new RuntimeException("Could not resolve avatar directory", e);
+        }
     }
 
     public synchronized List<User> findAllUsers(){
@@ -50,6 +62,55 @@ public class DataBase {
             users.add(cloningUtility.clone(entity));
         } else {
             throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        }
+    }
+    public synchronized Path getAvatarPath(UUID userId) {
+        return avatarDirectory.resolve(userId.toString() + ".png");
+    }
+    public synchronized void deleteAvatar(UUID uuid) {
+        Path avatarPath = getAvatarPath(uuid);
+        try {
+            if (Files.exists(avatarPath)) {
+                Files.delete(avatarPath);
+            } else {
+                throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not delete avatar for user with id \"%s\"".formatted(uuid), e);
+        }
+    }
+
+    public synchronized void updateAvatar(UUID uuid, byte[] avatarData) {
+        Path avatarPath = getAvatarPath(uuid);
+        try {
+            Files.write(avatarPath, avatarData);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not update avatar for user with id \"%s\"".formatted(uuid), e);
+        }
+    }
+
+    public synchronized void createAvatar(UUID uuid, byte[] avatarData) {
+        Path avatarPath = getAvatarPath(uuid);
+        try {
+            if (Files.exists(avatarPath)) {
+                throw new IllegalArgumentException("Avatar for user with id \"%s\" already exists".formatted(uuid));
+            }
+            Files.write(avatarPath, avatarData);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create avatar for user with id \"%s\"".formatted(uuid), e);
+        }
+    }
+
+    public synchronized byte[] getAvatar(UUID uuid) {
+        Path avatarPath = getAvatarPath(uuid);
+        try {
+            if (Files.exists(avatarPath)) {
+                return Files.readAllBytes(avatarPath);
+            } else {
+                throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not retrieve avatar for user with id \"%s\"".formatted(uuid), e);
         }
     }
 }

@@ -9,6 +9,4 @@ import java.util.UUID;
 public interface UserController {
     GetUsersResponse getUsers();
     GetUserResponse getUser(UUID uuid);
-    byte[] getUserAvatar(UUID id);
-    void putUserAvatar(UUID id, InputStream avatar);
 }

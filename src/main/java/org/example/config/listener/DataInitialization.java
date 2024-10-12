@@ -27,44 +27,30 @@ public class DataInitialization implements ServletContextListener {
                 .email("example@org")
                 .username("jurek")
                 .registrationDate(LocalDate.now())
-                .avatar(getResourceAsByteArray("../avatar/person1.png"))
                 .build();
 
         User marek = User.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("cc0b0577-bb6f-45b7-81d6-3db88e6ac19f"))
                 .email("example@pl")
                 .username("marek")
                 .registrationDate(LocalDate.now())
-                .avatar(getResourceAsByteArray("../avatar/person2.png"))
                 .build();
         User krzysztof = User.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("f08ef7e3-7f2a-4378-b1fb-2922d730c70d"))
                 .email("example@com")
                 .username("krzysztof")
                 .registrationDate(LocalDate.now())
-                .avatar(getResourceAsByteArray("../avatar/person3.png"))
                 .build();
         User franek = User.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("ff327e8a-77c0-4f9b-90a2-89e16895d1e1"))
                 .email("org@example")
                 .username("franek")
                 .registrationDate(LocalDate.now())
-                .avatar(getResourceAsByteArray("../avatar/person4.png"))
                 .build();
 
         userService.createUser(jurek);
         userService.createUser(marek);
         userService.createUser(krzysztof);
         userService.createUser(franek);
-    }
-    @SneakyThrows
-    private byte[] getResourceAsByteArray(String name) {
-        try (InputStream is = this.getClass().getResourceAsStream(name)) {
-            if (is != null) {
-                return is.readAllBytes();
-            } else {
-                throw new IllegalStateException("Unable to get resource %s".formatted(name));
-            }
-        }
     }
 }
