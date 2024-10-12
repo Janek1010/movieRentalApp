@@ -13,8 +13,9 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
-    public void updateAvatar(UUID id, byte[] avatar) {
-        this.avatarRepository.updateAvatar(id, avatar);
+
+    public void updateAvatar(UUID id, InputStream avatar) throws IOException {
+        this.avatarRepository.updateAvatar(id, avatar.readAllBytes());
     }
 
     public void deleteAvatar(UUID uuid) {

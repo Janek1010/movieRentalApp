@@ -1,6 +1,7 @@
 package org.example.database;
 
 import org.example.Util.CloningUtility;
+import org.example.controller.servlet.exception.NotFoundException;
 import org.example.user.entity.User;
 
 import java.io.IOException;
@@ -40,9 +41,11 @@ public class DataBase {
     }
 
     public synchronized void createUser(User entity) {
+        System.out.println("create user");
         if (users.stream().anyMatch(user -> user.getId().equals(entity.getId()))){
             throw new IllegalArgumentException("This id is used!");
         }
+        entity.setRegistrationDate(LocalDate.now());
         users.add(cloningUtility.clone(entity));
     }
 
@@ -102,7 +105,8 @@ public class DataBase {
             if (Files.exists(avatarPath)) {
                 return Files.readAllBytes(avatarPath);
             } else {
-                throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+                throw new NotFoundException();
+                //throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
             }
         } catch (IOException e) {
             throw new RuntimeException("Could not retrieve avatar for user with id \"%s\"".formatted(uuid), e);

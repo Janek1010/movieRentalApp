@@ -10,6 +10,75 @@ GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12
 
 ###
 
+# delete user.
+
+DELETE http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+
+###
+
+# User disappeared
+
+GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+
+###
+
+# create or update user
+
+PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+Content-Type: application/json
+
+{
+  "username": "darek",
+  "email": "dareczek@wp.pl"
+}
+
+###
+
+# User is changed
+
+GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+
+###
+
+# create or update user
+
+PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+Content-Type: application/json
+
+{
+  "username": "mirek",
+  "email": "mireczek@wp.pl"
+}
+
+###
+
+# User is changed
+
+GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+
+### AVATAR
+
 # Get single user avatar.
 
 GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
+
+###
+
+# delete avatarr.
+
+DELETE http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
+
+###
+
+# Create character portrait.
+
+PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="changedAvatar.png'
+
+< C:\Users\janek\MyProjects\movieRentalApp\src\main\resources\avatar\changedAvatar.png
+--boundary--
+
+###

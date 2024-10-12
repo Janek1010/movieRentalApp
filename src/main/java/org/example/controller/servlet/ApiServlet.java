@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.user.avatar.controller.api.AvatarController;
 import org.example.user.controller.api.UserController;
+import org.example.user.dto.GetUserResponse;
+import org.example.user.dto.PutUserRequest;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -70,6 +72,47 @@ public class ApiServlet extends HttpServlet {
         }
         response.sendError(HttpServletResponse.SC_BAD_REQUEST);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = parseRequestPath(request);
+        String servletPath = request.getServletPath();
+        if (Paths.API.equals(servletPath)) {
+            if (path.matches(Patterns.USER.pattern())) {
+                UUID uuid = extractUuid(Patterns.USER, path);
+                userController.deleteUser(uuid);
+                return;
+            } else if (path.matches(Patterns.AVATAR.pattern())){
+                UUID uuid = extractUuid(Patterns.AVATAR, path);
+                avatarController.deleteAvatar(uuid);
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = parseRequestPath(request);
+        String servletPath = request.getServletPath();
+        if (Paths.API.equals(servletPath)) {
+            if (path.matches(Patterns.USER.pattern())) {
+                UUID uuid = extractUuid(Patterns.USER, path);
+                PutUserRequest putUserRequest =jsonb.fromJson(request.getReader(), PutUserRequest.class);
+                putUserRequest.setId(uuid);
+                userController.updateOrCreateUser(putUserRequest);
+                response.addHeader("Location", createUrl(request, Paths.API, "users", uuid.toString()));
+                return;
+            }
+            else if (path.matches(Patterns.AVATAR.pattern())) {
+                UUID uuid = extractUuid(Patterns.AVATAR, path);
+                avatarController.updateAvatar(uuid, request.getPart("avatar").getInputStream());
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+
     private String parseRequestPath(HttpServletRequest request) {
         String path = request.getPathInfo();
         path = path != null ? path : "";
