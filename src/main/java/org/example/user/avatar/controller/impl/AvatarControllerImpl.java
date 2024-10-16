@@ -1,5 +1,7 @@
 package org.example.user.avatar.controller.impl;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import org.example.user.avatar.controller.api.AvatarController;
 import org.example.user.avatar.service.AvatarService;
 
@@ -7,9 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+@RequestScoped
 public class AvatarControllerImpl implements AvatarController {
     private final AvatarService avatarService;
 
+    @Inject
     public AvatarControllerImpl(AvatarService avatarService) {
         this.avatarService = avatarService;
     }

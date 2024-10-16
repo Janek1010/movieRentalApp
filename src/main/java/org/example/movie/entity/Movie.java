@@ -1,6 +1,7 @@
 package org.example.movie.entity;
 
 import lombok.*;
+import org.example.user.entity.User;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -18,4 +19,5 @@ public class Movie implements Serializable {
     private String director;
     private MovieFormat movieFormat;
     private Genre genre;
+    private User user;
 }

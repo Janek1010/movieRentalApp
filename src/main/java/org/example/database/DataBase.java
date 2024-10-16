@@ -1,5 +1,8 @@
 package org.example.database;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import org.example.Util.CloningUtility;
 import org.example.controller.servlet.exception.NotFoundException;
 import org.example.user.entity.User;
@@ -15,16 +18,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class DataBase {
     private final Set<User> users = new HashSet<>();
 
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
 
-    public DataBase(CloningUtility cloningUtility, Path avatarDirectory) {
+    @Inject
+    public DataBase(CloningUtility cloningUtility) throws URISyntaxException {
         this.cloningUtility = cloningUtility;
-        this.avatarDirectory = avatarDirectory;
+        this.avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
     }
 
     public synchronized List<User> findAllUsers(){
@@ -106,7 +111,6 @@ public class DataBase {
                 return Files.readAllBytes(avatarPath);
             } else {
                 throw new NotFoundException();
-                //throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
             }
         } catch (IOException e) {
             throw new RuntimeException("Could not retrieve avatar for user with id \"%s\"".formatted(uuid), e);

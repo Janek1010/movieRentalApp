@@ -1,19 +1,21 @@
 package org.example.user.repository.memory;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 import org.example.database.DataBase;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+@ApplicationScoped
 public class UserInMemoryRepository implements UserRepository {
     private final DataBase dataBase;
 
+    @Inject
     public UserInMemoryRepository(DataBase dataBase){
         this.dataBase = dataBase;
     }
