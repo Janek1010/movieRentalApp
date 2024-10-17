@@ -20,4 +20,6 @@
         private Double popularityScore;
         @Singular
         private List<Movie> movies;
+
+
     }

@@ -33,16 +33,33 @@ public class DataBase {
         this.avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
     }
 
-    public synchronized List<User> findAllUsers(){
+    public synchronized List<User> findAllUsers() {
         return users.stream()
-                .map(cloningUtility::clone)
+                .map(user -> {
+                    User clonedUser = cloningUtility.clone(user);
+                    List<Movie> userMovies = movies.stream()
+                            .filter(movie -> movie.getUser().getId().equals(clonedUser.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedUser.setMovies(userMovies);
+                    return clonedUser;
+                })
                 .collect(Collectors.toList());
     }
-    public synchronized User findUserById(UUID uuid){
+
+    public synchronized User findUserById(UUID uuid) {
         return users.stream()
                 .filter(user -> user.getId().equals(uuid))
                 .findFirst()
-                .map(cloningUtility::clone)
+                .map(user -> {
+                    User clonedUser = cloningUtility.clone(user);
+                    List<Movie> userMovies = movies.stream()
+                            .filter(movie -> movie.getUser().getId().equals(clonedUser.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedUser.setMovies(userMovies);
+                    return clonedUser;
+                })
                 .orElse(null);
     }
 
@@ -119,20 +136,35 @@ public class DataBase {
 
 
 
+    public synchronized List<Genre> findAllGenres() {
+        return genres.stream()
+                .map(genre -> {
+                    Genre clonedGenre = cloningUtility.clone(genre);
+                    List<Movie> genreMovies = movies.stream()
+                            .filter(movie -> movie.getGenre().getId().equals(clonedGenre.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedGenre.setMovies(genreMovies);
+                    return clonedGenre;
+                })
+                .collect(Collectors.toList());
+    }
+
     public synchronized Genre findGendreById(UUID id) {
         return genres.stream()
                 .filter(genre -> genre.getId().equals(id))
                 .findFirst()
-                .map(cloningUtility::clone)
+                .map(genre -> {
+                    Genre clonedGenre = cloningUtility.clone(genre);
+                    List<Movie> genreMovies = movies.stream()
+                            .filter(movie -> movie.getGenre().getId().equals(clonedGenre.getId()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedGenre.setMovies(genreMovies);
+                    return clonedGenre;
+                })
                 .orElse(null);
     }
-
-    public synchronized List<Genre> findAllGenres() {
-        return genres.stream()
-                .map(cloningUtility::clone)
-                .collect(Collectors.toList());
-    }
-
     public synchronized void createGenre(Genre entity) {
         if (genres.stream().anyMatch(genre -> genre.getId().equals(entity.getId()))){
             throw new IllegalArgumentException("This id is used!");
@@ -168,11 +200,12 @@ public class DataBase {
                 .collect(Collectors.toList());
     }
 
-    public synchronized void createMovie(Movie entity) {
-        if (movies.stream().anyMatch(movies -> movies.getId().equals(entity.getId()))){
+    public synchronized void createMovie(Movie value) {
+        if (movies.stream().anyMatch(movies -> movies.getId().equals(value.getId()))){
             throw new IllegalArgumentException("This id is used!");
         }
-        movies.add(cloningUtility.clone(entity));
+        Movie entity = cloneWithRelationships(value);
+        movies.add(entity);
     }
 
     public synchronized void deleteMovie(Movie entity) {
@@ -181,12 +214,31 @@ public class DataBase {
         }
     }
 
-    public synchronized void updateMovie(Movie entity) {
-        if (movies.removeIf(movie -> movie.getId().equals(entity.getId()))) {
-            movies.add(cloningUtility.clone(entity));
+    public synchronized void updateMovie(Movie value) {
+        Movie entity = cloneWithRelationships(value);
+        if (movies.removeIf(movie -> movie.getId().equals(value.getId()))) {
+            movies.add(entity);
         } else {
             throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
         }
     }
-   // public CloneWithRelation
+    private Movie cloneWithRelationships(Movie value) {
+        Movie entity = cloningUtility.clone(value);
+
+        if (entity.getUser() != null) {
+            entity.setUser(users.stream()
+                    .filter(user -> user.getId().equals(value.getUser().getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getId()))));
+        }
+
+        if (entity.getGenre() != null) {
+            entity.setGenre(genres.stream()
+                    .filter(profession -> profession.getId().equals(value.getGenre().getId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No profession with id \"%s\".".formatted(value.getGenre().getId()))));
+        }
+
+        return entity;
+    }
 }

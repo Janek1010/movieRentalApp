@@ -11,7 +11,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
 @EqualsAndHashCode
 public class Movie implements Serializable {
     private UUID id;
@@ -20,4 +19,16 @@ public class Movie implements Serializable {
     private MovieFormat movieFormat;
     private Genre genre;
     private User user;
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", director='" + director + '\'' +
+                ", movieFormat=" + movieFormat +
+                ", genre=" + genre.getName() +
+                ", user=" + user.getUsername() +
+                '}';
+    }
 }

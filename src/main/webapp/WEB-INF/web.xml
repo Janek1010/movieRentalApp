@@ -4,8 +4,4 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0"
          metadata-complete="false">
-    <context-param>
-        <param-name>avatarDirectory</param-name>
-        <param-value>C:/Users/janek/MyProjects/movieRentalApp/src/main/resources/avatar</param-value>
-    </context-param>
 </web-app>
