@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{genreEdit.id}" required="true"/>
+        <f:viewAction action="#{genreEdit.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Edit genre info</h2></header>
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:inputText id="name" value="#{genreEdit.genre.name}" styleClass="form-control"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:outputLabel for="popularityScore" value="Popularity Score:" styleClass="form-label"/>
+                            <h:inputText id="popularityScore" value="#{genreEdit.genre.popularityScore}" styleClass="form-control"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:outputLabel for="description" value="Description:" styleClass="form-label"/>
+                            <h:inputTextarea id="description" value="#{genreEdit.genre.description}" styleClass="form-control" rows="4"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                                         action="#{genreEdit.saveAction()}"/>
+                    </div>
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                    </div>
+                </div>
+            </h:form>
+        </article>
+    </ui:define>
+
+</ui:composition>

@@ -184,41 +184,41 @@ public class DataInitialization implements ServletContextListener {
         movieService.createMovie(godfather);
 
 
-        System.out.println("Movies:");
-        movieService.findAllMovies().forEach(System.out::println);
-        System.out.println();
-
-        System.out.println();
-        System.out.println("================GENRES======================");
-        genreService.findAllGenres().forEach(genre -> {
-            System.out.println();
-            System.out.println("Genre: " + genre.getName());
-            if (genre.getMovies() != null && !genre.getMovies().isEmpty()) {
-                System.out.println("Movies:");
-                genre.getMovies().forEach(movie -> {
-                    System.out.println("    - " + movie.getTitle());
-                });
-            } else {
-                System.out.println("    No movies available for this genre.");
-            }
-            System.out.println();
-        });
-        System.out.println();
-
-        System.out.println("==================USERS====================");
-        userService.findAllUsers().forEach(user -> {
-            System.out.println("User: " + user.getUsername());
-            if (user.getMovies() != null && !user.getMovies().isEmpty()) {
-                System.out.println("Movies:");
-                user.getMovies().forEach(movie -> {
-                    System.out.println("    - " + movie.getTitle());
-                });
-            } else {
-                System.out.println("    No movies available for this user.");
-            }
-            System.out.println();
-        });
-        System.out.println();
+//        System.out.println("Movies:");
+//        movieService.findAllMovies().forEach(System.out::println);
+//        System.out.println();
+//
+//        System.out.println();
+//        System.out.println("================GENRES======================");
+//        genreService.findAllGenres().forEach(genre -> {
+//            System.out.println();
+//            System.out.println("Genre: " + genre.getName());
+//            if (genre.getMovies() != null && !genre.getMovies().isEmpty()) {
+//                System.out.println("Movies:");
+//                genre.getMovies().forEach(movie -> {
+//                    System.out.println("    - " + movie.getTitle());
+//                });
+//            } else {
+//                System.out.println("    No movies available for this genre.");
+//            }
+//            System.out.println();
+//        });
+//        System.out.println();
+//
+//        System.out.println("==================USERS====================");
+//        userService.findAllUsers().forEach(user -> {
+//            System.out.println("User: " + user.getUsername());
+//            if (user.getMovies() != null && !user.getMovies().isEmpty()) {
+//                System.out.println("Movies:");
+//                user.getMovies().forEach(movie -> {
+//                    System.out.println("    - " + movie.getTitle());
+//                });
+//            } else {
+//                System.out.println("    No movies available for this user.");
+//            }
+//            System.out.println();
+//        });
+//        System.out.println();
     }
 
 }
