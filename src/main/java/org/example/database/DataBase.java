@@ -173,6 +173,7 @@ public class DataBase {
     }
 
     public synchronized void deleteGenre(Genre entity) {
+        movies.removeIf(movie -> movie.getGenre().getId().equals(entity.getId()));
         if (!genres.removeIf(genre -> genre.getId().equals(entity.getId()))) {
             throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
         }
@@ -209,6 +210,9 @@ public class DataBase {
     }
 
     public synchronized void deleteMovie(Movie entity) {
+        for (User user : users) {
+            user.getMovies().removeIf(movie -> movie.getId().equals(entity.getId()));
+        }
         if (!movies.removeIf(movie -> movie.getId().equals(entity.getId()))) {
             throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
         }
