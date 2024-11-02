@@ -1,5 +1,6 @@
 package org.example.movie.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.user.entity.User;
 
@@ -12,23 +13,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
+@Entity
+@Table(name = "movies")
+@ToString
 public class Movie implements Serializable {
+    @Id
     private UUID id;
     private String title;
     private String director;
     private MovieFormat movieFormat;
+    @ManyToOne
+    @JoinColumn(name = "genre")
     private Genre genre;
+    @ManyToOne
+    @JoinColumn(name = "user")
     private User user;
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", director='" + director + '\'' +
-                ", movieFormat=" + movieFormat +
-                ", genre=" + genre.getName() +
-                ", user=" + user.getUsername() +
-                '}';
-    }
+
 }

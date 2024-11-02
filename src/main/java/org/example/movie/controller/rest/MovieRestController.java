@@ -1,11 +1,14 @@
 package org.example.movie.controller.rest;
 
 import jakarta.inject.Inject;
+import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
+import lombok.extern.java.Log;
 import org.example.factories.DtoFunctionFactory;
 import org.example.movie.controller.api.MovieController;
+import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.dto.GetMovieResponse;
 import org.example.movie.model.dto.GetMoviesResponse;
@@ -13,8 +16,10 @@ import org.example.movie.model.dto.PutMovieRequest;
 import org.example.movie.service.MovieService;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class MovieRestController implements MovieController {
     private final MovieService service;
     private final DtoFunctionFactory factory;
@@ -31,8 +36,8 @@ public class MovieRestController implements MovieController {
     }
 
     @Override
-    public GetMoviesResponse getMovieOfGenre(UUID id) {
-        return factory.moviesToResponse().apply(service.findAllByGenre(id));
+    public GetMoviesResponse getMovieOfGenre(UUID uuid) {
+        return factory.moviesToResponse().apply(service.findAllByGenre(Genre.builder().id(uuid).build()));
     }
 
     @Override
@@ -56,6 +61,12 @@ public class MovieRestController implements MovieController {
             service.updateMovie(factory.requestToMovie().apply(request));
         } catch (IllegalArgumentException ex) {
             throw new BadRequestException(ex);
+        } catch (TransactionalException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 }

@@ -1,5 +1,6 @@
 package org.example.user.controller.impl;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
@@ -12,7 +13,7 @@ import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
 import java.util.UUID;
-@RequestScoped
+@ApplicationScoped
 public class UserControllerImpl implements UserController {
     private final UserService userService;
     private final DtoFunctionFactory factory;

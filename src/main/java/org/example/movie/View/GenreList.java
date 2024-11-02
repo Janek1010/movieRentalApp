@@ -1,5 +1,6 @@
 package org.example.movie.View;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -12,7 +13,7 @@ import org.example.movie.service.MovieService;
 
 import java.util.UUID;
 
-@RequestScoped
+@ApplicationScoped
 @Named
 public class GenreList {
     private final GenreService service;

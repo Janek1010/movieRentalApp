@@ -2,6 +2,7 @@ package org.example.user.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
@@ -23,7 +24,21 @@ public class UserService {
 
     public Optional<User> find(UUID uuid) { return userRepository.find(uuid);}
     public List<User> findAllUsers() { return userRepository.findAll();}
+    @Transactional
     public void createUser(User user){ userRepository.create(user);}
     public void deleteUser(User user){ userRepository.delete(user);}
     public void updateUser(User user){userRepository.update(user);}
+
+    @Transactional
+    public void updateAvatar(UUID id, InputStream is) {
+        userRepository.find(id).ifPresent(user -> {
+            try {
+                user.setAvatar(is.readAllBytes());
+                userRepository.update(user);
+            } catch (IOException ex) {
+                throw new IllegalStateException(ex);
+            }
+        });
+    }
+
 }
