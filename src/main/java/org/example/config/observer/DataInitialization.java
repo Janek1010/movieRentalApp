@@ -70,7 +70,7 @@ public class DataInitialization implements ServletContextListener {
         userService.createUser(franek);
 
         Genre sciFi = Genre.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("a963294f-ee53-472c-8bdc-f6364dc59e76"))
                 .name("sci-fi")
                 .popularityScore(9.1)
                 .description("Science Fiction")
@@ -103,7 +103,7 @@ public class DataInitialization implements ServletContextListener {
         genreService.createGenre(comedy);
 
         Movie terminator = Movie.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b"))
                 .title("Terminator")
                 .genre(sciFi)
                 .user(jurek)

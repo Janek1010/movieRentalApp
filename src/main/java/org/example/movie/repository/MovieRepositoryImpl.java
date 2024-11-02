@@ -43,4 +43,9 @@ public class MovieRepositoryImpl implements MovieRepository {
     public void update(Movie entity) {
         dataBase.updateMovie(entity);
     }
+
+    @Override
+    public List<Movie> findAllByGenre(UUID uuid) {
+        return dataBase.findAllByGenre(uuid);
+    }
 }

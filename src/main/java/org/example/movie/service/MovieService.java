@@ -40,4 +40,7 @@ public class MovieService {
     public void updateMovie(Movie movie) {
         movieRepository.update(movie);
     }
+    public List<Movie> findAllByGenre(UUID uuid){
+        return movieRepository.findAllByGenre(uuid);
+    }
 }

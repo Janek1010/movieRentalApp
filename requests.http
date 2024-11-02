@@ -1,36 +1,119 @@
-# Get all users.
+# Get all genres.
 
-GET http://localhost:9082/movieRental/api/users
-
-###
-
-# Get single user.
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+GET http://localhost:9082/movieRental/api/genres
 
 ###
 
-# delete user.
+# Get single genre.
 
-DELETE http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
-
-###
-
-# User disappeared
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+GET http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
 
 ###
 
-# create or update user
+# delete genre.
 
-PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
+DELETE http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
+
+###
+
+# create or update genre
+
+PUT http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
 Content-Type: application/json
 
 {
-  "username": "darek",
-  "email": "dareczek@wp.pl"
+  "name": "darek",
+  "popularityScore": 4.1,
+  "description": "testtttt"
 }
+
+###
+
+# Get all movies.
+
+GET http://localhost:9082/movieRental/api/movies
+
+
+###
+
+# Get all movies of a given genre
+
+GET http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76/movies
+
+###
+
+# Get a movie
+
+GET http://localhost:9082/movieRental/api/movies/4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b
+
+###
+
+# Remove a movie
+
+DELETE http://localhost:9082/movieRental/api/movies/4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b
+
+
+###
+
+PUT http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+Content-Type: application/json
+
+{
+  "title": "test",
+  "director": "robert"
+}
+
+
+###
+
+GET http://localhost:9082/movieRental/api/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ###
 

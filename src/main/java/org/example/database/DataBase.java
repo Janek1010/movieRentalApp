@@ -2,9 +2,9 @@ package org.example.database;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import org.example.Util.CloningUtility;
-import org.example.controller.servlet.exception.NotFoundException;
 import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.user.entity.User;
@@ -183,7 +183,7 @@ public class DataBase {
         if (genres.removeIf(movie -> movie.getId().equals(entity.getId()))) {
             genres.add(cloningUtility.clone(entity));
         } else {
-            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+            this.createGenre(entity);
         }
     }
 
@@ -213,30 +213,27 @@ public class DataBase {
         for (User user : users) {
             user.getMovies().removeIf(movie -> movie.getId().equals(entity.getId()));
         }
-        if (!movies.removeIf(movie -> movie.getId().equals(entity.getId()))) {
-            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
+        for (Genre genre : genres) {
+            genre.getMovies().removeIf(movie -> movie.getId().equals(entity.getId()));
         }
+        movies.removeIf(movie -> movie.getId().equals(entity.getId()));
     }
 
     public synchronized void updateMovie(Movie value) {
         Movie entity = cloneWithRelationships(value);
-        if (movies.removeIf(movie -> movie.getId().equals(value.getId()))) {
-            movies.add(entity);
-        } else {
-            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(entity.getId()));
-        }
+        this.deleteMovie(Movie.builder().id(value.getId()).build());
+        movies.add(entity);
     }
     private Movie cloneWithRelationships(Movie value) {
         Movie entity = cloningUtility.clone(value);
 
-        if (entity.getUser() != null) {
+        if (entity.getUser() != null && entity.getUser().getId() != null) {
             entity.setUser(users.stream()
                     .filter(user -> user.getId().equals(value.getUser().getId()))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getId()))));
         }
-
-        if (entity.getGenre() != null) {
+        if (entity.getGenre() != null && entity.getUser().getId() != null) {
             entity.setGenre(genres.stream()
                     .filter(profession -> profession.getId().equals(value.getGenre().getId()))
                     .findFirst()
@@ -245,4 +242,13 @@ public class DataBase {
 
         return entity;
     }
+
+    public synchronized List<Movie> findAllByGenre(UUID genreId) {
+        System.out.println("dupa blada");
+        return movies.stream()
+                .filter(movie -> movie.getGenre().getId().equals(genreId))
+                .map(cloningUtility::clone)
+                .collect(Collectors.toList());
+    }
+
 }
