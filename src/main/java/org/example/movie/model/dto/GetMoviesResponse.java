@@ -15,6 +15,9 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class GetMoviesResponse {
+    @Singular
+    private List<Movie> movies;
+
     @Getter
     @Setter
     @Builder
@@ -28,6 +31,4 @@ public class GetMoviesResponse {
         private String director;
         private MovieFormat movieFormat;
     }
-    @Singular
-    private List<Movie> movies;
 }

@@ -26,7 +26,7 @@ public class Movie implements Serializable {
     @JoinColumn(name = "genre")
     private Genre genre;
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_username")
     private User user;
 
 

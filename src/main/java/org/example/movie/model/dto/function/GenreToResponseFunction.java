@@ -2,8 +2,6 @@ package org.example.movie.model.dto.function;
 
 import org.example.movie.entity.Genre;
 import org.example.movie.model.dto.GetGenreResponse;
-import org.example.user.dto.GetUserResponse;
-import org.example.user.entity.User;
 
 import java.util.function.Function;
 

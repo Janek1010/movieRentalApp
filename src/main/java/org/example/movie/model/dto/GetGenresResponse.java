@@ -2,7 +2,6 @@ package org.example.movie.model.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +13,9 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class GetGenresResponse {
+    @Singular
+    private List<Genre> genres;
+
     @Getter
     @Setter
     @Builder
@@ -27,6 +29,4 @@ public class GetGenresResponse {
         private String description;
         private Double popularityScore;
     }
-    @Singular
-    private List<Genre> genres;
 }

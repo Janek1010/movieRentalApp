@@ -1,10 +1,8 @@
 package org.example.user.dto;
 
 import lombok.*;
-import org.example.movie.entity.MovieFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Getter

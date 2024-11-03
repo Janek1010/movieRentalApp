@@ -4,168 +4,89 @@ GET http://localhost:9082/movieRental/api/genres
 
 ###
 
-# Get single genre.
+# create genre
 
-GET http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
-
-###
-
-# delete genre.
-
-DELETE http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
-
-###
-
-# create or update genre
-
-PUT http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76
+PUT http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19
 Content-Type: application/json
 
 {
-  "name": "darek",
+  "name": "drama",
   "popularityScore": 4.1,
   "description": "testtttt"
 }
 
 ###
 
+# update genre
+
+PATCH http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19
+Content-Type: application/json
+
+{
+  "popularityScore": 7.2,
+  "description": "super test"
+}
+
+###
+
+# Get single genre.
+
+GET http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19
+
+###
+
+# delete genre.
+
+DELETE http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19
+
+
+### Movies
+
 # Get all movies.
 
 GET http://localhost:9082/movieRental/api/movies
 
+###
+
+PUT http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+Content-Type: application/json
+
+{
+  "title": "test",
+  "director": "robert",
+  "movieFormat": "BLU_RAY",
+  "user": "856248d3-e719-496f-bb7a-49ec3210a710"
+}
+
+###
+
+PATCH http://localhost:9082/movieRental/api/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
+Content-Type: application/json
+
+{
+  "title": "zmiana nazwy",
+  "director": "marek",
+  "movieFormat": "DVD"
+}
 
 ###
 
 # Get all movies of a given genre
 
-GET http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76/movies
+GET http://localhost:9082/movieRental/api/genres/9e1a6242-0164-4044-9006-bbb57d14ef19/movies
 
 ###
 
 # Get a movie
 
-GET http://localhost:9082/movieRental/api/movies/4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b
+GET http://localhost:9082/movieRental/api/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
 
 ###
 
 # Remove a movie
 
-DELETE http://localhost:9082/movieRental/api/movies/4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b
+DELETE http://localhost:9082/movieRental/api/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
 
 
-###
 
-PUT http://localhost:9082/movieRental/api/genres/a963294f-ee53-472c-8bdc-f6364dc59e76/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
-Content-Type: application/json
 
-{
-  "title": "test",
-  "director": "robert"
-}
-
-
-###
-
-GET http://localhost:9082/movieRental/api/movies/580a1cb0-2e6a-4b43-86a3-1033c9bde55b
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###
-
-# User is changed
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
-
-###
-
-# create or update user
-
-PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
-Content-Type: application/json
-
-{
-  "username": "mirek",
-  "email": "mireczek@wp.pl"
-}
-
-###
-
-# User is changed
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0
-
-### AVATAR
-
-# Get single user avatar.
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
-
-###
-
-# delete avatarr.
-
-DELETE http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
-
-###
-
-# Create character portrait.
-
-PUT http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="changedAvatar.png'
-
-< C:\Users\janek\MyProjects\movieRentalApp\src\main\resources\avatar\changedAvatar.png
---boundary--
-
-###
-
-# Get single user avatar.
-
-GET http://localhost:9082/movieRental/api/users/525d3e7b-bb1f-4c13-bf17-926d1a12e4c0/avatar

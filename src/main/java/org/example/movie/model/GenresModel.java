@@ -3,9 +3,9 @@ package org.example.movie.model;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
@@ -14,6 +14,9 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class GenresModel implements Serializable {
+    @Singular
+    private List<Genre> genres;
+
     @Getter
     @Setter
     @Builder
@@ -27,6 +30,4 @@ public class GenresModel implements Serializable {
         private String description;
         private Double popularityScore;
     }
-    @Singular
-    private List<Genre> genres;
 }

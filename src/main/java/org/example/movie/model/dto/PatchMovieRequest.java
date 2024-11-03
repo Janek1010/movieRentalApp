@@ -1,9 +1,13 @@
 package org.example.movie.model.dto;
-
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.example.movie.entity.MovieFormat;
-
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,11 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class PutMovieRequest {
-    private UUID id;
+public class PatchMovieRequest {
     private String title;
     private String director;
     private MovieFormat movieFormat;
-    private UUID genre;
-    private UUID user;
 }

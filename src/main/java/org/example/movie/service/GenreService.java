@@ -31,15 +31,18 @@ public class GenreService {
     public List<Genre> findAllGenres() {
         return genreRepository.findAll();
     }
+
     @Transactional
     public void createGenre(Genre genre) {
         genreRepository.create(genre);
     }
+
     @Transactional
     public void deleteGenre(Genre genre) {
         genreRepository.delete(genre);
     }
 
+    @Transactional
     public void updateGenre(Genre genre) {
         genreRepository.update(genre);
     }

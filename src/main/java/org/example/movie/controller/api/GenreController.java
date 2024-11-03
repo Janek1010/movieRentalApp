@@ -2,7 +2,10 @@ package org.example.movie.controller.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.example.movie.model.dto.*;
+import org.example.movie.model.dto.GetGenreResponse;
+import org.example.movie.model.dto.GetGenresResponse;
+import org.example.movie.model.dto.PatchGenreRequest;
+import org.example.movie.model.dto.PutGenreRequest;
 
 import java.util.UUID;
 
@@ -25,4 +28,9 @@ public interface GenreController {
     @DELETE
     @Path("/genres/{id}")
     void deleteGenre(@PathParam("id") UUID uuid);
+
+    @PATCH
+    @Path("/genres/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void patchGenre(@PathParam("id") UUID id, PatchGenreRequest request);
 }

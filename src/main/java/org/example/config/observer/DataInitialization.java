@@ -4,9 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
 import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.entity.MovieFormat;
@@ -36,41 +34,44 @@ public class DataInitialization implements ServletContextListener {
     }
 
     private void init() {
+
         User jurek = User.builder()
-                .id(UUID.fromString("525d3e7b-bb1f-4c13-bf17-926d1a12e4c0"))
+                .id(UUID.randomUUID())
                 .email("example@org")
                 .username("jurek")
                 .registrationDate(LocalDate.now())
                 .build();
 
         User marek = User.builder()
-                .id(UUID.fromString("cc0b0577-bb6f-45b7-81d6-3db88e6ac19f"))
+                .id(UUID.randomUUID())
                 .email("example@pl")
                 .username("marek")
                 .registrationDate(LocalDate.now())
                 .build();
+
         User krzysztof = User.builder()
-                .id(UUID.fromString("f08ef7e3-7f2a-4378-b1fb-2922d730c70d"))
+                .id(UUID.randomUUID())
                 .email("example@com")
                 .username("krzysztof")
                 .registrationDate(LocalDate.now())
                 .build();
         User franek = User.builder()
-                .id(UUID.fromString("ff327e8a-77c0-4f9b-90a2-89e16895d1e1"))
+                .id(UUID.randomUUID())
                 .email("org@example")
                 .username("franek")
                 .registrationDate(LocalDate.now())
                 .build();
-
-
 
         userService.createUser(jurek);
         userService.createUser(marek);
         userService.createUser(krzysztof);
         userService.createUser(franek);
 
+        System.out.println("Franek ID:");
+        System.out.println(franek.getId());
+
         Genre sciFi = Genre.builder()
-                .id(UUID.fromString("a963294f-ee53-472c-8bdc-f6364dc59e76"))
+                .id(UUID.randomUUID())
                 .name("sci-fi")
                 .popularityScore(9.1)
                 .description("Science Fiction")
@@ -102,8 +103,9 @@ public class DataInitialization implements ServletContextListener {
         genreService.createGenre(drama);
         genreService.createGenre(comedy);
 
+
         Movie terminator = Movie.builder()
-                .id(UUID.fromString("4ddea84c-8c39-4c0a-9426-e5a5fb3ca35b"))
+                .id(UUID.randomUUID())
                 .title("Terminator")
                 .genre(sciFi)
                 .user(jurek)
@@ -183,42 +185,6 @@ public class DataInitialization implements ServletContextListener {
         movieService.createMovie(shawshank);
         movieService.createMovie(godfather);
 
-
-//        System.out.println("Movies:");
-//        movieService.findAllMovies().forEach(System.out::println);
-//        System.out.println();
-//
-//        System.out.println();
-//        System.out.println("================GENRES======================");
-//        genreService.findAllGenres().forEach(genre -> {
-//            System.out.println();
-//            System.out.println("Genre: " + genre.getName());
-//            if (genre.getMovies() != null && !genre.getMovies().isEmpty()) {
-//                System.out.println("Movies:");
-//                genre.getMovies().forEach(movie -> {
-//                    System.out.println("    - " + movie.getTitle());
-//                });
-//            } else {
-//                System.out.println("    No movies available for this genre.");
-//            }
-//            System.out.println();
-//        });
-//        System.out.println();
-//
-//        System.out.println("==================USERS====================");
-//        userService.findAllUsers().forEach(user -> {
-//            System.out.println("User: " + user.getUsername());
-//            if (user.getMovies() != null && !user.getMovies().isEmpty()) {
-//                System.out.println("Movies:");
-//                user.getMovies().forEach(movie -> {
-//                    System.out.println("    - " + movie.getTitle());
-//                });
-//            } else {
-//                System.out.println("    No movies available for this user.");
-//            }
-//            System.out.println();
-//        });
-//        System.out.println();
     }
 
 }

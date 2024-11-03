@@ -14,6 +14,9 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class GetUsersResponse {
+    @Singular
+    private List<User> users;
+
     @Getter
     @Setter
     @Builder
@@ -27,6 +30,4 @@ public class GetUsersResponse {
         private LocalDate registrationDate;
         private String email;
     }
-    @Singular
-    private List<User> users;
 }

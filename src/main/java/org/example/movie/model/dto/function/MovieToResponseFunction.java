@@ -1,10 +1,8 @@
 package org.example.movie.model.dto.function;
 
 import org.example.movie.entity.Movie;
-import org.example.movie.entity.MovieFormat;
 import org.example.movie.model.dto.GetMovieResponse;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 public class MovieToResponseFunction implements Function<Movie, GetMovieResponse> {

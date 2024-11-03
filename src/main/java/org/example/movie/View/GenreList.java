@@ -1,24 +1,19 @@
 package org.example.movie.View;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.example.factories.ModelFunctionFactory;
 import org.example.movie.entity.Genre;
-import org.example.movie.entity.Movie;
 import org.example.movie.model.GenresModel;
 import org.example.movie.service.GenreService;
-import org.example.movie.service.MovieService;
-
-import java.util.UUID;
 
 @ApplicationScoped
 @Named
 public class GenreList {
     private final GenreService service;
-    private GenresModel genres;
     private final ModelFunctionFactory factory;
+    private GenresModel genres;
 
 
     @Inject

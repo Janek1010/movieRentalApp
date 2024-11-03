@@ -18,6 +18,8 @@ public class GetGenreResponse {
     private String name;
     private String description;
     private Double popularityScore;
+    @Singular
+    private List<Movie> movies;
 
     @Getter
     @Setter
@@ -32,6 +34,4 @@ public class GetGenreResponse {
         private String director;
         private MovieFormat movieFormat;
     }
-    @Singular
-    private List<Movie> movies;
 }

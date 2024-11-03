@@ -1,12 +1,10 @@
 package org.example.movie.model;
 
+import lombok.*;
+import org.example.movie.entity.MovieFormat;
+
 import java.util.List;
 import java.util.UUID;
-
-import lombok.*;
-import org.example.movie.entity.Genre;
-import org.example.movie.entity.MovieFormat;
-import org.example.user.entity.User;
 
 @Getter
 @Setter
@@ -20,6 +18,8 @@ public class GenreModel {
     private String name;
     private String description;
     private Double popularityScore;
+    @Singular
+    private List<Movie> movies;
 
     @Getter
     @Setter
@@ -34,7 +34,4 @@ public class GenreModel {
         private String director;
         private MovieFormat movieFormat;
     }
-
-    @Singular
-    private List<Movie> movies;
 }

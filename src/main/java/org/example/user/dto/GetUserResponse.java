@@ -19,6 +19,8 @@ public class GetUserResponse {
     private String username;
     private LocalDate registrationDate;
     private String email;
+    @Singular
+    private List<Movie> movies;
 
     @Getter
     @Setter
@@ -33,6 +35,4 @@ public class GetUserResponse {
         private String director;
         private MovieFormat movieFormat;
     }
-    @Singular
-    private List<Movie> movies;
 }

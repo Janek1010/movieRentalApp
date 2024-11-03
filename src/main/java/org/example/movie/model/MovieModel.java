@@ -1,17 +1,7 @@
 package org.example.movie.model;
 
-import lombok.ToString;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.example.movie.entity.Genre;
+import lombok.*;
 import org.example.movie.entity.MovieFormat;
-import org.example.user.entity.User;
 
 import java.util.UUID;
 

@@ -1,14 +1,11 @@
 package org.example.user.repository.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,7 +21,7 @@ public class UserPersistenceRepository implements UserRepository {
 
     @Override
     public Optional<User> find(UUID id) {
-        return Optional.ofNullable(em.find(User.class,id));
+        return Optional.ofNullable(em.find(User.class, id));
     }
 
     @Override

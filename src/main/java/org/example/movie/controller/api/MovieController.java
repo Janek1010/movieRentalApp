@@ -4,9 +4,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.example.movie.model.dto.GetMovieResponse;
 import org.example.movie.model.dto.GetMoviesResponse;
+import org.example.movie.model.dto.PatchMovieRequest;
 import org.example.movie.model.dto.PutMovieRequest;
 
 import java.util.UUID;
+
 @Path("")
 public interface MovieController {
     @GET
@@ -32,10 +34,14 @@ public interface MovieController {
     void deleteMovie(@PathParam("id") UUID id);
 
 
-
     @PUT
     @Path("/genres/{genreId}/movies/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     void putMovie(@PathParam("genreId") UUID genreId, @PathParam("id") UUID id, PutMovieRequest request);
+
+    @PATCH
+    @Path("/movies/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void patchProperty(@PathParam("id") UUID id, PatchMovieRequest request);
 
 }

@@ -8,10 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.factories.ModelFunctionFactory;
-import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.MovieModel;
-import org.example.movie.service.GenreService;
 import org.example.movie.service.MovieService;
 
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class MovieView implements Serializable {
 
 
     @Inject
-    public MovieView(MovieService service, ModelFunctionFactory factory ) {
+    public MovieView(MovieService service, ModelFunctionFactory factory) {
         this.service = service;
         this.factory = factory;
     }

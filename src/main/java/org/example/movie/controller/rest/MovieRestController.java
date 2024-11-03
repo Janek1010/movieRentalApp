@@ -12,6 +12,7 @@ import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.dto.GetMovieResponse;
 import org.example.movie.model.dto.GetMoviesResponse;
+import org.example.movie.model.dto.PatchMovieRequest;
 import org.example.movie.model.dto.PutMovieRequest;
 import org.example.movie.service.MovieService;
 
@@ -54,19 +55,24 @@ public class MovieRestController implements MovieController {
 
     @Override
     public void putMovie(UUID genreId, UUID id, PutMovieRequest request) {
-        request.setId(id);
-        request.setGenre(genreId);
-        System.out.println(request);
         try {
-            service.updateMovie(factory.requestToMovie().apply(request));
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
-        } catch (TransactionalException ex) {
+            service.createMovie(factory.requestToMovie().apply(genreId,id,request));
+        }  catch (TransactionalException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);
             }
             throw ex;
         }
+    }
+
+    @Override
+    public void patchProperty(UUID id, PatchMovieRequest request) {
+        service.findMovieById(id).ifPresentOrElse(
+                entity -> service.updateMovie(factory.updateMovie().apply(entity, request)),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
 }

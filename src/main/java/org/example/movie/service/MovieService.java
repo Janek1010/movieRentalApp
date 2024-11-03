@@ -28,6 +28,7 @@ public class MovieService {
         this.genreRepository = genreRepository;
         this.userRepository = userRepository;
     }
+
     public Optional<Movie> findMovieById(UUID id) {
         return movieRepository.find(id);
     }
@@ -46,15 +47,18 @@ public class MovieService {
         }
         movieRepository.create(movie);
     }
+
     @Transactional
     public void deleteMovie(Movie movie) {
         movieRepository.delete(movie);
     }
+
     @Transactional
     public void updateMovie(Movie movie) {
         movieRepository.update(movie);
     }
-    public List<Movie> findAllByGenre(Genre genre){
+
+    public List<Movie> findAllByGenre(Genre genre) {
         return movieRepository.findAllByGenre(genre);
     }
 }

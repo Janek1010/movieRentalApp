@@ -1,22 +1,15 @@
 package org.example.movie.View;
-import jakarta.enterprise.context.Conversation;
-import jakarta.enterprise.context.ConversationScoped;
+
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 import org.example.factories.ModelFunctionFactory;
 import org.example.movie.model.GenreCreateModel;
-import org.example.movie.model.MovieModel;
 import org.example.movie.service.GenreService;
-import org.example.movie.service.MovieService;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
