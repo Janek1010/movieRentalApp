@@ -1,5 +1,7 @@
 package org.example.movie.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
@@ -22,13 +24,16 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class MovieRestController implements MovieController {
-    private final MovieService service;
+    private  MovieService service;
     private final DtoFunctionFactory factory;
 
     @Inject
-    public MovieRestController(MovieService service, DtoFunctionFactory factory) {
-        this.service = service;
+    public MovieRestController( DtoFunctionFactory factory) {
         this.factory = factory;
+    }
+    @EJB
+    public void setService(MovieService service) {
+        this.service = service;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class MovieRestController implements MovieController {
     public void putMovie(UUID genreId, UUID id, PutMovieRequest request) {
         try {
             service.createMovie(factory.requestToMovie().apply(genreId,id,request));
-        }  catch (TransactionalException ex) {
+        }  catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);

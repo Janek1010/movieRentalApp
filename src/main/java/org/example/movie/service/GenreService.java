@@ -11,8 +11,10 @@ import org.example.movie.repository.api.GenreRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-@ApplicationScoped
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 @Log
 public class GenreService {
@@ -32,17 +34,14 @@ public class GenreService {
         return genreRepository.findAll();
     }
 
-    @Transactional
     public void createGenre(Genre genre) {
         genreRepository.create(genre);
     }
 
-    @Transactional
     public void deleteGenre(Genre genre) {
         genreRepository.delete(genre);
     }
 
-    @Transactional
     public void updateGenre(Genre genre) {
         genreRepository.update(genre);
     }

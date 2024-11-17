@@ -1,5 +1,7 @@
 package org.example.movie.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.TransactionalException;
@@ -27,15 +29,17 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class GenreRestController implements GenreController {
-    private final GenreService genreService;
+    private  GenreService genreService;
     private final DtoFunctionFactory factory;
 
     @Inject
-    public GenreRestController(GenreService genreService, DtoFunctionFactory factory) {
-        this.genreService = genreService;
+    public GenreRestController( DtoFunctionFactory factory) {
         this.factory = factory;
     }
-
+    @EJB
+    public void setGenreService(GenreService genreService) {
+        this.genreService = genreService;
+    }
 
     @Override
     public GetGenreResponse getGenre(UUID uuid) {
@@ -55,7 +59,7 @@ public class GenreRestController implements GenreController {
         try {
             genreService.createGenre(factory.requestToGenre().apply(uuid, request));
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (TransactionalException ex) {
+        } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);

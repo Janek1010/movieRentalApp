@@ -1,10 +1,11 @@
-package org.example.config.observer;
+package org.example.config.singleton;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Initialized;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.*;
+
 import jakarta.servlet.ServletContextListener;
+import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.entity.MovieFormat;
@@ -16,25 +17,37 @@ import org.example.user.service.UserService;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@ApplicationScoped
-public class DataInitialization implements ServletContextListener {
-    private final UserService userService;
-    private final MovieService movieService;
-    private final GenreService genreService;
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor
+public class DataInitialization {
+    private  UserService userService;
+    private  MovieService movieService;
+    private  GenreService genreService;
 
-    @Inject
-    public DataInitialization(UserService userService, MovieService movieService, GenreService genreService) {
-        this.userService = userService;
-        this.movieService = movieService;
+    @EJB
+    public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
     }
-
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
+    @EJB
+    public void setMovieService(MovieService movieService) {
+        this.movieService = movieService;
     }
 
-    private void init() {
+    @EJB
+    public void  setUserService(UserService userService){
+        this.userService = userService;
 
+
+    }
+
+    @PostConstruct
+    @SneakyThrows
+    private void init() {
+        if (userService.findAllUsers().size() > 0){
+            return;
+        }
         User jurek = User.builder()
                 .id(UUID.randomUUID())
                 .email("example@org")
@@ -62,13 +75,12 @@ public class DataInitialization implements ServletContextListener {
                 .registrationDate(LocalDate.now())
                 .build();
 
+
         userService.createUser(jurek);
         userService.createUser(marek);
         userService.createUser(krzysztof);
         userService.createUser(franek);
 
-        System.out.println("Franek ID:");
-        System.out.println(franek.getId());
 
         Genre sciFi = Genre.builder()
                 .id(UUID.randomUUID())
@@ -175,6 +187,7 @@ public class DataInitialization implements ServletContextListener {
                 .director("Francis Ford Coppola")
                 .movieFormat(MovieFormat.DVD)
                 .build();
+
 
         movieService.createMovie(terminator);
         movieService.createMovie(inception);

@@ -1,5 +1,6 @@
 package org.example.movie.View;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -11,15 +12,19 @@ import org.example.movie.service.GenreService;
 @ApplicationScoped
 @Named
 public class GenreList {
-    private final GenreService service;
+    private  GenreService service;
     private final ModelFunctionFactory factory;
     private GenresModel genres;
 
 
     @Inject
-    public GenreList(GenreService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public GenreList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(GenreService service) {
+        this.service = service;
     }
 
     public GenresModel getGenres() {

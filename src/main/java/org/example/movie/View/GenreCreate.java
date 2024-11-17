@@ -1,5 +1,6 @@
 package org.example.movie.View;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @ViewScoped
 public class GenreCreate implements Serializable {
 
-    private final GenreService genreService;
+    private  GenreService genreService;
     private final ModelFunctionFactory factory;
     @Getter
     private GenreCreateModel genre;
@@ -23,11 +24,13 @@ public class GenreCreate implements Serializable {
 
     @Inject
     public GenreCreate(
-            GenreService genreService,
             ModelFunctionFactory factory
     ) {
-        this.genreService = genreService;
         this.factory = factory;
+    }
+    @EJB
+    public void setGenreService(GenreService genreService) {
+        this.genreService = genreService;
     }
 
     public void init() {

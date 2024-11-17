@@ -1,5 +1,7 @@
 package org.example.user.service;
 
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class UserService {
     private final UserRepository userRepository;
@@ -31,7 +34,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     public void createUser(User user) {
         userRepository.create(user);
     }
@@ -44,7 +46,6 @@ public class UserService {
         userRepository.update(user);
     }
 
-    @Transactional
     public void updateAvatar(UUID id, InputStream is) {
         userRepository.find(id).ifPresent(user -> {
             try {

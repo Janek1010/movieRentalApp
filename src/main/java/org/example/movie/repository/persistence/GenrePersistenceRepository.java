@@ -1,6 +1,7 @@
 package org.example.movie.repository.persistence;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.example.movie.entity.Genre;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@Dependent
 public class GenrePersistenceRepository implements GenreRepository {
     private EntityManager em;
 

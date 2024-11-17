@@ -1,5 +1,6 @@
 package org.example.movie.View;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -20,8 +21,8 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class MovieView implements Serializable {
-    private final MovieService service;
-    private final ModelFunctionFactory factory;
+    private  MovieService service;
+    private  ModelFunctionFactory factory;
 
     @Setter
     @Getter
@@ -32,9 +33,12 @@ public class MovieView implements Serializable {
 
 
     @Inject
-    public MovieView(MovieService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public MovieView( ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+    @EJB
+    public void setService(MovieService service) {
+        this.service = service;
     }
 
     public void init() throws IOException {

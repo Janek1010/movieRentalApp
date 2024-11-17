@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class MovieService {
     private final MovieRepository movieRepository;
@@ -37,7 +40,6 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    @Transactional
     public void createMovie(Movie movie) {
         if (movieRepository.find(movie.getId()).isPresent()) {
             throw new IllegalArgumentException("Movie already exists.");
@@ -48,12 +50,10 @@ public class MovieService {
         movieRepository.create(movie);
     }
 
-    @Transactional
     public void deleteMovie(Movie movie) {
         movieRepository.delete(movie);
     }
 
-    @Transactional
     public void updateMovie(Movie movie) {
         movieRepository.update(movie);
     }
