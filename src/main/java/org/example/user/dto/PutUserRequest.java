@@ -17,4 +17,5 @@ public class PutUserRequest {
     private String username;
     private LocalDate registrationDate;
     private String email;
+    private String password;
 }

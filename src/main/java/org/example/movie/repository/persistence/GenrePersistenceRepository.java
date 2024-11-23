@@ -5,6 +5,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.example.movie.entity.Genre;
+import org.example.movie.entity.Movie;
 import org.example.movie.repository.api.GenreRepository;
 
 import java.util.List;

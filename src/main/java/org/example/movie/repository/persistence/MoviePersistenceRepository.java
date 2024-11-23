@@ -36,6 +36,8 @@ public class MoviePersistenceRepository implements MovieRepository {
     @Override
     public void create(Movie entity) {
         em.persist(entity);
+        em.refresh(em.find(Genre.class,entity.getGenre().getId()));
+        em.refresh(em.find(User.class,entity.getUser().getId()));
     }
 
     @Override

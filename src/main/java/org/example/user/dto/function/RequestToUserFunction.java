@@ -17,6 +17,7 @@ public class RequestToUserFunction implements BiFunction<UUID,PutUserRequest, Us
                 .email(putUserRequest.getEmail())
                 .username(putUserRequest.getUsername())
                 .registrationDate(putUserRequest.getRegistrationDate())
+                .password(putUserRequest.getPassword())
                 .build();
     }
 }
