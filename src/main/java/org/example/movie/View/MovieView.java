@@ -21,9 +21,8 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class MovieView implements Serializable {
-    private  MovieService service;
-    private  ModelFunctionFactory factory;
-
+    private final ModelFunctionFactory factory;
+    private MovieService service;
     @Setter
     @Getter
     private UUID id;
@@ -33,9 +32,10 @@ public class MovieView implements Serializable {
 
 
     @Inject
-    public MovieView( ModelFunctionFactory factory) {
+    public MovieView(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+
     @EJB
     public void setService(MovieService service) {
         this.service = service;

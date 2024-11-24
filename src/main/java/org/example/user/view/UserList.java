@@ -12,8 +12,8 @@ import org.example.user.service.UserService;
 @ApplicationScoped
 @Named
 public class UserList {
-    private  UserService service;
     private final ModelFunctionFactory factory;
+    private UserService service;
     private UsersModel users;
 
 
@@ -21,6 +21,7 @@ public class UserList {
     public UserList(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+
     @EJB
     public void setService(UserService service) {
         this.service = service;
@@ -28,7 +29,7 @@ public class UserList {
 
     public UsersModel getUsers() {
         if (users == null) {
-            users = factory.usersToModel().apply(service.findAllUsers());
+            users = factory.usersToModel().apply(service.findAll());
         }
         return users;
     }

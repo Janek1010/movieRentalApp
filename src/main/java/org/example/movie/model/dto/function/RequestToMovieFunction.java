@@ -7,8 +7,6 @@ import org.example.movie.model.dto.PutMovieRequest;
 import org.example.user.entity.User;
 
 import java.util.UUID;
-import java.util.function.Function;
-import java.util.function.BiFunction;
 
 public class RequestToMovieFunction implements TriFunction<UUID, UUID, PutMovieRequest, Movie> {
     @Override

@@ -2,8 +2,6 @@ package org.example.user.controller.api;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.example.movie.model.dto.GetGenresResponse;
-import org.example.movie.model.dto.PutGenreRequest;
 import org.example.user.dto.GetUserResponse;
 import org.example.user.dto.GetUsersResponse;
 import org.example.user.dto.PutUserRequest;

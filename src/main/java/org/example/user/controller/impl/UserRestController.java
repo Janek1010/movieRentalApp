@@ -3,7 +3,6 @@ package org.example.user.controller.impl;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
-import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
@@ -24,8 +23,8 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class UserRestController implements UserController {
-    private UserService userService;
     private final DtoFunctionFactory factory;
+    private UserService userService;
 
     @Inject
     public UserRestController(DtoFunctionFactory factory) {
@@ -46,15 +45,15 @@ public class UserRestController implements UserController {
     @Override
     public GetUsersResponse getUsers() {
         System.out.println("ile");
-        System.out.println(userService.findAllUsers().size());
-        return factory.usersToResponse().apply(userService.findAllUsers());
+        System.out.println(userService.findAll().size());
+        return factory.usersToResponse().apply(userService.findAll());
     }
 
     @Override
     @SneakyThrows
     public void putUser(UUID uuid, PutUserRequest request) {
         try {
-            userService.createUser(factory.requestToUser().apply(uuid,request));
+            userService.createUser(factory.requestToUser().apply(uuid, request));
             throw new WebApplicationException(Response.Status.CREATED);
         } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {

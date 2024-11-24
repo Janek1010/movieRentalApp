@@ -1,17 +1,21 @@
 package org.example.config.singleton;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
 import jakarta.ejb.*;
-
-import jakarta.servlet.ServletContextListener;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.entity.MovieFormat;
 import org.example.movie.service.GenreService;
 import org.example.movie.service.MovieService;
 import org.example.user.entity.User;
+import org.example.user.entity.UserRoles;
 import org.example.user.service.UserService;
 
 import java.time.LocalDate;
@@ -21,22 +25,29 @@ import java.util.UUID;
 @Startup
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 @NoArgsConstructor
+@DependsOn("InitializeAdminService")
+@DeclareRoles({UserRoles.ADMIN, UserRoles.USER})
+@RunAs(UserRoles.ADMIN)
+@Log
 public class DataInitialization {
-    private  UserService userService;
-    private  MovieService movieService;
-    private  GenreService genreService;
+    private UserService userService;
+    private MovieService movieService;
+    private GenreService genreService;
+    @Inject
+    private SecurityContext securityContext;
 
     @EJB
     public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
     }
+
     @EJB
     public void setMovieService(MovieService movieService) {
         this.movieService = movieService;
     }
 
     @EJB
-    public void  setUserService(UserService userService){
+    public void setUserService(UserService userService) {
         this.userService = userService;
 
 
@@ -45,7 +56,7 @@ public class DataInitialization {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (userService.findAllUsers().size() > 0){
+        if (userService.findAll().size() > 0) {
             return;
         }
         User jurek = User.builder()

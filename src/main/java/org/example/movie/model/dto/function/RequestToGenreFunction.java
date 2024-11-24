@@ -5,9 +5,8 @@ import org.example.movie.model.dto.PutGenreRequest;
 
 import java.util.UUID;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
-public class RequestToGenreFunction implements BiFunction<UUID,PutGenreRequest, Genre> {
+public class RequestToGenreFunction implements BiFunction<UUID, PutGenreRequest, Genre> {
     @Override
     public Genre apply(UUID id, PutGenreRequest putGenreRequest) {
         return Genre.builder()

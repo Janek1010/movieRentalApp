@@ -5,7 +5,7 @@ import org.example.movie.model.dto.PatchMovieRequest;
 
 import java.util.function.BiFunction;
 
-public class UpdateMovieWithRequestFunction implements BiFunction<Movie, PatchMovieRequest,Movie> {
+public class UpdateMovieWithRequestFunction implements BiFunction<Movie, PatchMovieRequest, Movie> {
     @Override
     public Movie apply(Movie movie, PatchMovieRequest patchMovieRequest) {
         return Movie.builder()

@@ -23,10 +23,9 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class GenreView implements Serializable {
-    private  GenreService service;
-    private  MovieService movieService;
     private final ModelFunctionFactory factory;
-
+    private GenreService service;
+    private MovieService movieService;
     @Setter
     @Getter
     private UUID id;
@@ -39,10 +38,12 @@ public class GenreView implements Serializable {
     public GenreView(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+
     @EJB
     public void setService(GenreService service) {
         this.service = service;
     }
+
     @EJB
     public void setMovieService(MovieService movieService) {
         this.movieService = movieService;

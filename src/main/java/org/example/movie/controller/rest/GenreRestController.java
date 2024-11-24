@@ -1,17 +1,14 @@
 package org.example.movie.controller.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.example.factories.DtoFunctionFactory;
@@ -22,6 +19,7 @@ import org.example.movie.model.dto.GetGenresResponse;
 import org.example.movie.model.dto.PatchGenreRequest;
 import org.example.movie.model.dto.PutGenreRequest;
 import org.example.movie.service.GenreService;
+import org.example.user.entity.UserRoles;
 
 import java.util.UUID;
 import java.util.logging.Level;
@@ -29,13 +27,14 @@ import java.util.logging.Level;
 @Path("")
 @Log
 public class GenreRestController implements GenreController {
-    private  GenreService genreService;
     private final DtoFunctionFactory factory;
+    private GenreService genreService;
 
     @Inject
-    public GenreRestController( DtoFunctionFactory factory) {
+    public GenreRestController(DtoFunctionFactory factory) {
         this.factory = factory;
     }
+
     @EJB
     public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
@@ -68,6 +67,7 @@ public class GenreRestController implements GenreController {
         }
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     @Override
     public void deleteGenre(UUID uuid) {
         genreService.deleteGenre(Genre.builder().id(uuid).build());

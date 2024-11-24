@@ -12,8 +12,8 @@ import org.example.movie.service.GenreService;
 @ApplicationScoped
 @Named
 public class GenreList {
-    private  GenreService service;
     private final ModelFunctionFactory factory;
+    private GenreService service;
     private GenresModel genres;
 
 

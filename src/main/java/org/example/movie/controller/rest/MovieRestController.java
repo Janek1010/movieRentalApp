@@ -1,10 +1,12 @@
 package org.example.movie.controller.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
-import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
 import lombok.extern.java.Log;
@@ -17,20 +19,23 @@ import org.example.movie.model.dto.GetMoviesResponse;
 import org.example.movie.model.dto.PatchMovieRequest;
 import org.example.movie.model.dto.PutMovieRequest;
 import org.example.movie.service.MovieService;
+import org.example.user.entity.UserRoles;
 
 import java.util.UUID;
 import java.util.logging.Level;
 
 @Path("")
 @Log
+@RolesAllowed(UserRoles.USER)
 public class MovieRestController implements MovieController {
-    private  MovieService service;
     private final DtoFunctionFactory factory;
+    private MovieService service;
 
     @Inject
-    public MovieRestController( DtoFunctionFactory factory) {
+    public MovieRestController(DtoFunctionFactory factory) {
         this.factory = factory;
     }
+
     @EJB
     public void setService(MovieService service) {
         this.service = service;
@@ -61,8 +66,8 @@ public class MovieRestController implements MovieController {
     @Override
     public void putMovie(UUID genreId, UUID id, PutMovieRequest request) {
         try {
-            service.createMovie(factory.requestToMovie().apply(genreId,id,request));
-        }  catch (EJBException ex) {
+            service.createForCallerPrincipal(factory.requestToMovie().apply(genreId, id, request));
+        } catch (EJBException ex) {
             if (ex.getCause() instanceof IllegalArgumentException) {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);
@@ -74,7 +79,16 @@ public class MovieRestController implements MovieController {
     @Override
     public void patchProperty(UUID id, PatchMovieRequest request) {
         service.findMovieById(id).ifPresentOrElse(
-                entity -> service.updateMovie(factory.updateMovie().apply(entity, request)),
+
+                entity -> {
+                    try {
+                        service.updateMovie(factory.updateMovie().apply(entity, request));
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+
+                    }
+                },
                 () -> {
                     throw new NotFoundException();
                 }

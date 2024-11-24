@@ -16,8 +16,8 @@ import java.util.UUID;
 @ViewScoped
 public class GenreCreate implements Serializable {
 
-    private  GenreService genreService;
     private final ModelFunctionFactory factory;
+    private GenreService genreService;
     @Getter
     private GenreCreateModel genre;
 
@@ -28,6 +28,7 @@ public class GenreCreate implements Serializable {
     ) {
         this.factory = factory;
     }
+
     @EJB
     public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
