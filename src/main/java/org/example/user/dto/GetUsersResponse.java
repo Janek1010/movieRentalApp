@@ -27,6 +27,7 @@ public class GetUsersResponse {
     public static class User {
         private UUID id;
         private String username;
+        private String login;
         private LocalDate registrationDate;
         private String email;
     }

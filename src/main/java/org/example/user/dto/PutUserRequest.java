@@ -15,6 +15,7 @@ import java.util.UUID;
 public class PutUserRequest {
     private UUID id;
     private String username;
+    private String login;
     private LocalDate registrationDate;
     private String email;
     private String password;

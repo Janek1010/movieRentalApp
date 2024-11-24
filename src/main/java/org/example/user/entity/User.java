@@ -22,6 +22,7 @@ public class User implements Serializable {
     @Id
     private UUID id;
     private String username;
+    private String login;
     @Column(name = "registration_date")
     private LocalDate registrationDate;
     private String email;

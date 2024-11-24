@@ -19,6 +19,7 @@ import org.example.user.entity.UserRoles;
 import org.example.user.service.UserService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Singleton
@@ -56,41 +57,45 @@ public class DataInitialization {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        if (userService.findAll().size() > 0) {
-            return;
-        }
+        System.out.println("inicjalizacja");
         User jurek = User.builder()
                 .id(UUID.randomUUID())
                 .email("example@org")
                 .username("jurek")
+                .login("jurek123")
+                .password("jurasek")
                 .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.USER))
                 .build();
 
         User marek = User.builder()
                 .id(UUID.randomUUID())
                 .email("example@pl")
                 .username("marek")
+                .login("marek123")
+                .username("marasek")
                 .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.USER))
                 .build();
 
         User krzysztof = User.builder()
                 .id(UUID.randomUUID())
                 .email("example@com")
                 .username("krzysztof")
+                .login("krzysztof123")
+                .password("krzysztofek")
                 .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.USER))
                 .build();
         User franek = User.builder()
                 .id(UUID.randomUUID())
                 .email("org@example")
                 .username("franek")
+                .login("franek123")
+                .password("franeczek")
                 .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.USER))
                 .build();
-
-
-        userService.createUser(jurek);
-        userService.createUser(marek);
-        userService.createUser(krzysztof);
-        userService.createUser(franek);
 
 
         Genre sciFi = Genre.builder()
@@ -120,11 +125,6 @@ public class DataInitialization {
                 .popularityScore(9.2)
                 .description("Humorous and light-hearted films")
                 .build();
-
-        genreService.createGenre(sciFi);
-        genreService.createGenre(action);
-        genreService.createGenre(drama);
-        genreService.createGenre(comedy);
 
 
         Movie terminator = Movie.builder()
@@ -198,17 +198,32 @@ public class DataInitialization {
                 .director("Francis Ford Coppola")
                 .movieFormat(MovieFormat.DVD)
                 .build();
+        if (userService.find("krzysztof123").isEmpty()){
+            System.out.println("nie ma krzysia");
+            userService.createUser(jurek);
+            userService.createUser(marek);
+            userService.createUser(krzysztof);
+            userService.createUser(franek);
 
+            genreService.createGenre(sciFi);
+            genreService.createGenre(action);
+            genreService.createGenre(drama);
+            genreService.createGenre(comedy);
 
-        movieService.createMovie(terminator);
-        movieService.createMovie(inception);
-        movieService.createMovie(matrix);
-        movieService.createMovie(pulpFiction);
-        movieService.createMovie(interstellar);
-        movieService.createMovie(gladiator);
-        movieService.createMovie(shawshank);
-        movieService.createMovie(godfather);
+            movieService.createMovie(terminator);
+            movieService.createMovie(inception);
+            movieService.createMovie(matrix);
+            movieService.createMovie(pulpFiction);
+            movieService.createMovie(interstellar);
+            movieService.createMovie(gladiator);
+            movieService.createMovie(shawshank);
+            movieService.createMovie(godfather);
+        }
 
+        System.out.println("size:");
+        System.out.println(userService.findAll().size());
+        System.out.println(genreService.findAllGenres().size());
+        System.out.println(movieService.findAllMovies().size());
     }
 
 }

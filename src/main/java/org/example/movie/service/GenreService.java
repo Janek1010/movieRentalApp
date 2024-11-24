@@ -44,8 +44,8 @@ public class GenreService {
     }
 
     @RolesAllowed(UserRoles.ADMIN)
-    public void deleteGenre(Genre genre) {
-        genreRepository.delete(genre);
+    public void deleteGenre(UUID uuid) {
+        genreRepository.delete(genreRepository.find(uuid).orElseThrow());
     }
 
     @RolesAllowed(UserRoles.USER)

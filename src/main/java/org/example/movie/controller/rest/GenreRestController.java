@@ -59,19 +59,21 @@ public class GenreRestController implements GenreController {
             genreService.createGenre(factory.requestToGenre().apply(uuid, request));
             throw new WebApplicationException(Response.Status.CREATED);
         } catch (EJBException ex) {
-            if (ex.getCause() instanceof IllegalArgumentException) {
-                log.log(Level.WARNING, ex.getMessage(), ex);
-                throw new BadRequestException(ex);
-            }
-            throw ex;
+            throw new BadRequestException(ex);
         }
     }
 
     @RolesAllowed(UserRoles.ADMIN)
     @Override
     public void deleteGenre(UUID uuid) {
-        genreService.deleteGenre(Genre.builder().id(uuid).build());
+        genreService.findGenreById(uuid).ifPresentOrElse(
+                entity -> genreService.deleteGenre(uuid),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
+
 
     @Override
     public void patchGenre(UUID id, PatchGenreRequest request) {

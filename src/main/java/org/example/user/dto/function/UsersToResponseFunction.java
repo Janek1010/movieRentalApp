@@ -16,6 +16,7 @@ public class UsersToResponseFunction implements Function<List<User>, GetUsersRes
                                 .email(user.getEmail())
                                 .registrationDate(user.getRegistrationDate())
                                 .username(user.getUsername())
+                                .login(user.getLogin())
                                 .build())
                         .toList())
                 .build();

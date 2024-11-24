@@ -40,10 +40,11 @@ public class InitializeAdminService {
     @SneakyThrows
     private void init() {
         if (userRepository.findByLogin("admin-service").isEmpty()) {
-
+            System.out.println("ehhhhh");
             User admin = User.builder()
                     .id(UUID.fromString("14d59f3a-057c-44d5-825a-19295a6600a8"))
-                    .username("admin-service")
+                    .login("admin-service")
+                    .username("Admin")
                     .registrationDate(LocalDate.now())
                     .email("admin-service@simplerpg.example.com")
                     .password(passwordHash.generate("adminadmin".toCharArray()))

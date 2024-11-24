@@ -35,7 +35,7 @@ public class GenreList {
     }
 
     public String deleteAction(GenresModel.Genre genre) {
-        service.deleteGenre(Genre.builder().id(genre.getId()).build());
+        service.deleteGenre(genre.getId());
         return "genre_list?faces-redirect=true";
     }
 }

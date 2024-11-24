@@ -12,6 +12,7 @@ public class UserToResponseFunction implements Function<User, GetUserResponse> {
                 .id(user.getId())
                 .email(user.getEmail())
                 .username(user.getUsername())
+                .login(user.getLogin())
                 .registrationDate(user.getRegistrationDate())
                 .movies(user.getMovies().stream()
                         .map(movie -> GetUserResponse.Movie.builder()
