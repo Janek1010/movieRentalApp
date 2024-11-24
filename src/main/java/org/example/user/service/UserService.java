@@ -43,7 +43,11 @@ public class UserService {
 
     @PermitAll
     public void createUser(User user) {
+        System.out.println(user.getLogin());
+        System.out.println(user);
+        System.out.println("haslo: " + user.getPassword());
         user.setPassword(passwordHash.generate(user.getPassword().toCharArray()));
+        System.out.println(user);
         userRepository.create(user);
     }
 

@@ -59,6 +59,19 @@ public class MovieRestController implements MovieController {
     }
 
     @Override
+    public void putMovie(UUID id, PutMovieRequest request) {
+        try {
+            service.createForCallerPrincipal(factory.requestToMovie2Params().apply(id, request));
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
+        }
+    }
+
+    @Override
     public void deleteMovie(UUID id) {
         service.deleteMovie(Movie.builder().id(id).build());
     }

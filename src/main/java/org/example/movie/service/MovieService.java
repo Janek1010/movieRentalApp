@@ -43,7 +43,8 @@ public class MovieService {
 
     @RolesAllowed(UserRoles.USER)
     public List<Movie> findAllMovies() {
-        return movieRepository.findAll();
+        System.out.println("findAllMovies");
+        return findAllForCallerPrincipal();
     }
 
     @RolesAllowed(UserRoles.ADMIN)
@@ -97,8 +98,9 @@ public class MovieService {
     @RolesAllowed(UserRoles.USER)
     public List<Movie> findAllForCallerPrincipal() {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
-            return findAllMovies();
+            return movieRepository.findAll();
         }
+        System.out.println("przed userem");
         User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(IllegalStateException::new);
         return findAll(user);
@@ -117,9 +119,12 @@ public class MovieService {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             return;
         }
+        System.out.println("takie tam");
+        System.out.println(movie.get().getUser().getUsername());
+        System.out.println(securityContext.getCallerPrincipal().getName());
         if (securityContext.isCallerInRole(UserRoles.USER)
                 && movie.isPresent()
-                && movie.get().getUser().getUsername().equals(securityContext.getCallerPrincipal().getName())) {
+                && movie.get().getUser().getLogin().equals(securityContext.getCallerPrincipal().getName())) {
             return;
         }
         throw new EJBAccessException("Caller not authorized.");

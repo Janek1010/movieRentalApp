@@ -73,13 +73,13 @@ public class DataInitialization {
                 .email("example@pl")
                 .username("marek")
                 .login("marek123")
-                .username("marasek")
+                .password("marasek")
                 .registrationDate(LocalDate.now())
                 .roles(List.of(UserRoles.USER))
                 .build();
 
         User krzysztof = User.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("665e4aba-0640-49c2-b71f-4ddf1f9674ba"))
                 .email("example@com")
                 .username("krzysztof")
                 .login("krzysztof123")
@@ -87,6 +87,7 @@ public class DataInitialization {
                 .registrationDate(LocalDate.now())
                 .roles(List.of(UserRoles.USER))
                 .build();
+
         User franek = User.builder()
                 .id(UUID.randomUUID())
                 .email("org@example")
@@ -113,7 +114,7 @@ public class DataInitialization {
                 .build();
 
         Genre drama = Genre.builder()
-                .id(UUID.randomUUID())
+                .id(UUID.fromString("cdfbd2ad-7c1e-48d7-9f91-2d6d0c089b60"))
                 .name("drama")
                 .popularityScore(7.8)
                 .description("Emotional and narrative-driven films")
@@ -198,6 +199,7 @@ public class DataInitialization {
                 .director("Francis Ford Coppola")
                 .movieFormat(MovieFormat.DVD)
                 .build();
+
         if (userService.find("krzysztof123").isEmpty()){
             System.out.println("nie ma krzysia");
             userService.createUser(jurek);
@@ -219,11 +221,6 @@ public class DataInitialization {
             movieService.createMovie(shawshank);
             movieService.createMovie(godfather);
         }
-
-        System.out.println("size:");
-        System.out.println(userService.findAll().size());
-        System.out.println(genreService.findAllGenres().size());
-        System.out.println(movieService.findAllMovies().size());
     }
 
 }

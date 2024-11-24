@@ -43,7 +43,9 @@ public class DtoFunctionFactory {
     public RequestToMovieFunction requestToMovie() {
         return new RequestToMovieFunction();
     }
-
+    public RequestToMovieFunction2Params requestToMovie2Params() {
+        return new RequestToMovieFunction2Params();
+    }
     public UpdateGenreWithRequestFunction updateProperty() {
         return new UpdateGenreWithRequestFunction();
     }

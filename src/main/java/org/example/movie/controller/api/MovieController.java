@@ -27,6 +27,11 @@ public interface MovieController {
     @Produces(MediaType.APPLICATION_JSON)
     GetMovieResponse getMovie(@PathParam("id") UUID id);
 
+    @PUT
+    @Path("/movies/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    void putMovie(@PathParam("id") UUID id, PutMovieRequest request);
+
 
     @DELETE
     @Path("/movies/{id}")
