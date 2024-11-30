@@ -43,7 +43,6 @@ public class MovieService {
 
     @RolesAllowed(UserRoles.USER)
     public List<Movie> findAllMovies() {
-        System.out.println("findAllMovies");
         return findAllForCallerPrincipal();
     }
 

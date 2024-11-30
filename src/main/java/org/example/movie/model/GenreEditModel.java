@@ -1,6 +1,8 @@
 package org.example.movie.model;
 
 import lombok.*;
+import org.example.user.model.UserModel;
+import org.example.user.model.UsersModel;
 
 import java.util.UUID;
 
@@ -16,4 +18,5 @@ public class GenreEditModel {
     private String name;
     private String description;
     private Double popularityScore;
+    private UserModel user;
 }

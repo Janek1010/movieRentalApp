@@ -12,6 +12,7 @@ import org.example.factories.ModelFunctionFactory;
 import org.example.movie.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.GenreModel;
+import org.example.movie.model.MoviesModel;
 import org.example.movie.service.GenreService;
 import org.example.movie.service.MovieService;
 
@@ -33,6 +34,7 @@ public class GenreView implements Serializable {
     @Getter
     private GenreModel genre;
 
+    private MoviesModel movies;
 
     @Inject
     public GenreView(ModelFunctionFactory factory) {
@@ -53,9 +55,18 @@ public class GenreView implements Serializable {
         Optional<Genre> genre = service.findGenreById(id);
         if (genre.isPresent()) {
             this.genre = factory.genreToModel().apply(genre.get());
+            this.movies = getMovies();
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Genre not found");
         }
+    }
+    public MoviesModel getMovies(){
+        if (movies == null) {
+            movies = factory.moviesToModel().apply(movieService.findAllMovies());
+            // zmienic zeby patrzyla po kategorii a nie po wszystkich jego filmach
+            // trzeba tam metode dodac zeby analogicznie dzialala jak w tym findallu ze wywoluje finall by genre dla usera itp
+        }
+        return movies;
     }
 
     public String deleteMovie(UUID id) {

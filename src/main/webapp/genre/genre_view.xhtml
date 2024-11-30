@@ -34,10 +34,11 @@
                             </div>
                         </div>
 
-                        <h:dataTable value="#{genreView.genre.movies}" var="movie"
+                        <h:dataTable value="#{genreView.movies.movies}" var="movie"
                                      styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
-                            <h:column>
+
+                             <h:column>
                                 <f:facet name="header">Title</f:facet>
                                 <h:outputText value="#{movie.title}"/>
                             </h:column>

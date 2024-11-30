@@ -2,6 +2,7 @@ package org.example.movie.View;
 
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.example.factories.ModelFunctionFactory;
@@ -9,7 +10,7 @@ import org.example.movie.entity.Genre;
 import org.example.movie.model.GenresModel;
 import org.example.movie.service.GenreService;
 
-@ApplicationScoped
+@RequestScoped
 @Named
 public class GenreList {
     private final ModelFunctionFactory factory;

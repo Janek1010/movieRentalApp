@@ -9,7 +9,7 @@
         <h:outputStylesheet library="genre" name="css/genre_list.css"/><!-- Automatically relocated to head. -->
 
         <article class="text--justified">
-            <header><h2>Users</h2></header>
+            <header><h2>Genres</h2></header>
 
             <h:dataTable value="#{genreList.genres.genres}" var="genre"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
@@ -33,13 +33,14 @@
                     </h:link>
                 </h:column>
 
-                <h:column>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                     <f:facet name="header">Delete</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="Delete"
                                          action="#{genreList.deleteAction(genre)}"/>
                     </h:form>
                 </h:column>
+
 
                 <f:facet name="footer">
                     <h:button styleClass="btn" outcome="/genre/genre_create__basic.xhtml"

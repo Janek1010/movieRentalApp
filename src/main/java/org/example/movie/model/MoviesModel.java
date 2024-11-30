@@ -1,12 +1,11 @@
-package org.example.user.model;
+package org.example.movie.model;
 
 import lombok.*;
+import org.example.movie.entity.MovieFormat;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
 @Getter
 @Setter
 @Builder
@@ -14,9 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class UsersModel implements Serializable {
+public class MoviesModel implements Serializable {
     @Singular
-    private List<User> users;
+    private List<Movie> movies;
+
 
     @Getter
     @Setter
@@ -25,8 +25,10 @@ public class UsersModel implements Serializable {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @ToString
     @EqualsAndHashCode
-    public static class User {
+    public static class Movie {
         private UUID id;
-        private String login;
+        private String title;
+        private String director;
+        private MovieFormat movieFormat;
     }
 }

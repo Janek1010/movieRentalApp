@@ -1,7 +1,9 @@
 package org.example.factories;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import org.example.movie.model.MoviesModel;
 import org.example.movie.model.function.*;
+import org.example.user.model.function.UserToModelFunction;
 import org.example.user.model.function.UsersToModelFunction;
 
 @ApplicationScoped
@@ -32,5 +34,12 @@ public class ModelFunctionFactory {
 
     public ModelToGenreFunction modelToGenre() {
         return new ModelToGenreFunction();
+    }
+
+    public UserToModelFunction userToModel() {
+        return new UserToModelFunction();
+    }
+    public MoviesToModelFunction moviesToModel() {
+        return new MoviesToModelFunction();
     }
 }

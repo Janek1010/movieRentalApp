@@ -57,7 +57,17 @@ public class DataInitialization {
     @PostConstruct
     @SneakyThrows
     private void init() {
-        System.out.println("inicjalizacja");
+
+        User admin = User.builder()
+                .id(UUID.randomUUID())
+                .login("admin")
+                .username("admin")
+                .email("admin@simplerpg.example.com")
+                .password("adminadmin")
+                .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                .build();
+
         User jurek = User.builder()
                 .id(UUID.randomUUID())
                 .email("example@org")
@@ -201,8 +211,8 @@ public class DataInitialization {
                 .build();
 
         if (userService.find("krzysztof123").isEmpty()){
-            System.out.println("nie ma krzysia");
             userService.createUser(jurek);
+            userService.createUser(admin);
             userService.createUser(marek);
             userService.createUser(krzysztof);
             userService.createUser(franek);
