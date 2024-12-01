@@ -12,12 +12,12 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Edit genre info</h2></header>
+            <header><h2><h:outputText value="#{msg['genre.edit.title']}" /></h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:outputLabel for="name" value="#{msg['genre.edit.name']}:" styleClass="form-label"/>
                             <h:inputText id="name" value="#{genreEdit.genre.name}" styleClass="form-control"/>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:outputLabel for="popularityScore" value="Popularity Score:" styleClass="form-label"/>
+                            <h:outputLabel for="popularityScore" value="#{msg['genre.edit.popularityScore']}:" styleClass="form-label"/>
                             <h:inputText id="popularityScore" value="#{genreEdit.genre.popularityScore}" styleClass="form-control"/>
                         </div>
                     </div>
@@ -35,20 +35,19 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:outputLabel for="description" value="Description:" styleClass="form-label"/>
+                            <h:outputLabel for="description" value="#{msg['genre.edit.description']}:" styleClass="form-label"/>
                             <h:inputTextarea id="description" value="#{genreEdit.genre.description}" styleClass="form-control" rows="4"/>
                         </div>
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                        <h:commandButton styleClass="btn btn-primary" value="#{msg['genre.edit.update']}"
                                          action="#{genreEdit.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="#{msg['genre.edit.reset']}"/>
                     </div>
                 </div>
             </h:form>

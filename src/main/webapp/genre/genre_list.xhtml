@@ -9,42 +9,41 @@
         <h:outputStylesheet library="genre" name="css/genre_list.css"/><!-- Automatically relocated to head. -->
 
         <article class="text--justified">
-            <header><h2>Genres</h2></header>
+            <header><h2><h:outputText value="#{msg['genre.list.title']}" /></h2></header>
 
             <h:dataTable value="#{genreList.genres.genres}" var="genre"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                 <h:column>
-                    <f:facet name="header">Name</f:facet>
+                    <f:facet name="header"><h:outputText value="#{msg['genre.list.name']}" /></f:facet>
                     <h:outputText value="#{genre.name}"/>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">View</f:facet>
-                    <h:link outcome="/genre/genre_view.xhtml" value="View">
+                    <f:facet name="header"><h:outputText value="#{msg['genre.list.view']}" /></f:facet>
+                    <h:link outcome="/genre/genre_view.xhtml" value="#{msg['genre.list.view']}">
                         <f:param name="id" value="#{genre.id}"/>
                     </h:link>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Edit</f:facet>
-                    <h:link outcome="/genre/genre_edit.xhtml" value="Edit">
+                    <f:facet name="header"><h:outputText value="#{msg['genre.list.edit']}" /></f:facet>
+                    <h:link outcome="/genre/genre_edit.xhtml" value="#{msg['genre.list.edit']}">
                         <f:param name="id" value="#{genre.id}"/>
                     </h:link>
                 </h:column>
 
                 <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
-                    <f:facet name="header">Delete</f:facet>
+                    <f:facet name="header"><h:outputText value="#{msg['genre.list.delete']}" /></f:facet>
                     <h:form>
-                        <h:commandButton styleClass="btn" value="Delete"
+                        <h:commandButton styleClass="btn" value="#{msg['genre.list.delete']}"
                                          action="#{genreList.deleteAction(genre)}"/>
                     </h:form>
                 </h:column>
 
-
                 <f:facet name="footer">
                     <h:button styleClass="btn" outcome="/genre/genre_create__basic.xhtml"
-                              value="Create new genre"/>
+                              value="#{msg['genre.list.createNew']}" />
                 </f:facet>
             </h:dataTable>
         </article>

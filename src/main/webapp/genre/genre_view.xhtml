@@ -18,7 +18,7 @@
                     <div class="col-4">
                         <div class="row mb-2">
                             <div class="col-6">
-                                description
+                                <h:outputText value="#{msg['genre.view.description']}" />
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{genreView.genre.description}"/>
@@ -27,7 +27,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                popularityScore
+                                <h:outputText value="#{msg['genre.view.popularityScore']}" />
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{genreView.genre.popularityScore}"/>
@@ -36,31 +36,25 @@
 
                         <h:dataTable value="#{genreView.movies.movies}" var="movie"
                                      styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
-
-
-                             <h:column>
-                                <f:facet name="header">Title</f:facet>
+                            <h:column>
+                                <f:facet name="header"><h:outputText value="#{msg['genre.view.title']}" /></f:facet>
                                 <h:outputText value="#{movie.title}"/>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">View</f:facet>
-                                <h:link outcome="/movie/movie_view.xhtml" value="View">
+                                <f:facet name="header"><h:outputText value="#{msg['genre.view.view']}" /></f:facet>
+                                <h:link outcome="/movie/movie_view.xhtml" value="#{msg['genre.view.view']}">
                                     <f:param name="id" value="#{movie.id}"/>
                                 </h:link>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Delete</f:facet>
+                                <f:facet name="header"><h:outputText value="#{msg['genre.view.delete']}" /></f:facet>
                                 <h:form>
-                                    <h:commandButton styleClass="btn" value="Delete"
+                                    <h:commandButton styleClass="btn" value="#{msg['genre.view.delete']}"
                                                      action="#{genreView.deleteMovie(movie.id)}"/>
                                 </h:form>
                             </h:column>
-
                         </h:dataTable>
-
-
                     </div>
-
                 </div>
             </div>
         </article>

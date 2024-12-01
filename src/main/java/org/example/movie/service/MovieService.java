@@ -4,6 +4,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import org.example.user.entity.User;
 import org.example.user.entity.UserRoles;
 import org.example.user.repository.api.UserRepository;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,7 +40,7 @@ public class MovieService {
 
     @RolesAllowed(UserRoles.USER)
     public Optional<Movie> findMovieById(UUID id) {
-        return movieRepository.find(id);
+        return findForCallerPrincipal(id);
     }
 
     @RolesAllowed(UserRoles.USER)
@@ -93,8 +95,10 @@ public class MovieService {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             return findMovieById(id);
         }
+
         User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(IllegalStateException::new);
+
         return find(user, id);
     }
 
