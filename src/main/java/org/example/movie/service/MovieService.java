@@ -45,6 +45,10 @@ public class MovieService {
     public List<Movie> findAllMovies() {
         return findAllForCallerPrincipal();
     }
+    @RolesAllowed(UserRoles.USER)
+    public List<Movie> findAllMoviesByGenre(Genre genre) {
+        return findAllByGenreForCallerPrincipal(genre);
+    }
 
     @RolesAllowed(UserRoles.ADMIN)
     public void createMovie(Movie movie) {
@@ -99,10 +103,24 @@ public class MovieService {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             return movieRepository.findAll();
         }
-        System.out.println("przed userem");
         User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(IllegalStateException::new);
         return findAll(user);
+    }
+
+    @RolesAllowed(UserRoles.USER)
+    public List<Movie> findAllByGenreForCallerPrincipal(Genre genre) {
+        List<Movie> moviesByGenre = movieRepository.findAllByGenre(genre);
+        if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            return moviesByGenre;
+        }
+
+        User user = userRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                .orElseThrow(() -> new IllegalStateException("Nie znaleziono zalogowanego użytkownika"));
+
+        return moviesByGenre.stream()
+                .filter(movie -> movie.getUser().getUsername().equals(user.getUsername()))
+                .toList();
     }
 
     @RolesAllowed(UserRoles.USER)
@@ -118,9 +136,6 @@ public class MovieService {
         if (securityContext.isCallerInRole(UserRoles.ADMIN)) {
             return;
         }
-        System.out.println("takie tam");
-        System.out.println(movie.get().getUser().getUsername());
-        System.out.println(securityContext.getCallerPrincipal().getName());
         if (securityContext.isCallerInRole(UserRoles.USER)
                 && movie.isPresent()
                 && movie.get().getUser().getLogin().equals(securityContext.getCallerPrincipal().getName())) {

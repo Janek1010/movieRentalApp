@@ -60,11 +60,18 @@ public class GenreView implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Genre not found");
         }
     }
-    public MoviesModel getMovies(){
+    public MoviesModel getMovies() throws IOException {
         if (movies == null) {
-            movies = factory.moviesToModel().apply(movieService.findAllMovies());
-            // zmienic zeby patrzyla po kategorii a nie po wszystkich jego filmach
-            // trzeba tam metode dodac zeby analogicznie dzialala jak w tym findallu ze wywoluje finall by genre dla usera itp
+            Optional<Genre> genre = service.findGenreById(id);
+            if (genre.isPresent()) {
+                System.out.println("genre present");
+                System.out.println(genre);
+                movies = factory.moviesToModel().apply(movieService.findAllMoviesByGenre(genre.get()));
+                System.out.println("movies");
+                System.out.println(movies);
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Genre not found");
+            }
         }
         return movies;
     }
