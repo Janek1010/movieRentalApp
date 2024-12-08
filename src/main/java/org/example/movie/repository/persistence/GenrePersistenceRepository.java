@@ -3,7 +3,10 @@ package org.example.movie.repository.persistence;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.example.movie.entity.Genre;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.example.genre.entity.Genre;
 import org.example.movie.repository.api.GenreRepository;
 
 import java.util.List;
@@ -26,7 +29,12 @@ public class GenrePersistenceRepository implements GenreRepository {
 
     @Override
     public List<Genre> findAll() {
-        return em.createQuery("select p from Genre p", Genre.class).getResultList();
+//        return em.createQuery("select p from Genre p", Genre.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Genre> query = cb.createQuery(Genre.class);
+        Root<Genre> root = query.from(Genre.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override

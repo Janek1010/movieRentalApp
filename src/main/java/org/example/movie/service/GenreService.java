@@ -7,7 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.repository.api.GenreRepository;
 import org.example.user.entity.UserRoles;
 

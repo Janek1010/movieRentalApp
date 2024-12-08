@@ -9,7 +9,7 @@ import jakarta.security.enterprise.SecurityContext;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.entity.MovieFormat;
 import org.example.movie.service.GenreService;
@@ -63,6 +63,16 @@ public class DataInitialization {
                 .login("admin")
                 .username("admin")
                 .email("admin@simplerpg.example.com")
+                .password("adminadmin")
+                .registrationDate(LocalDate.now())
+                .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                .build();
+
+        User admin2 = User.builder()
+                .id(UUID.randomUUID())
+                .login("admin2")
+                .username("admin2")
+                .email("admin2@simplerpg.example.com")
                 .password("adminadmin")
                 .registrationDate(LocalDate.now())
                 .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
@@ -216,6 +226,7 @@ public class DataInitialization {
             userService.createUser(marek);
             userService.createUser(krzysztof);
             userService.createUser(franek);
+            userService.createUser(admin2);
 
             genreService.createGenre(sciFi);
             genreService.createGenre(action);

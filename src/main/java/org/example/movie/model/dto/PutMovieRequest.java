@@ -19,4 +19,5 @@ public class PutMovieRequest {
     private MovieFormat movieFormat;
     private UUID genre;
     private UUID user;
+    private Long version;
 }

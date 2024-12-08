@@ -1,7 +1,8 @@
-package org.example.movie.entity;
+package org.example.genre.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.movie.entity.Movie;
 
 import java.io.Serializable;
 import java.util.List;

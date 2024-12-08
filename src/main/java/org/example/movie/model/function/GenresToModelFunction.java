@@ -1,6 +1,6 @@
 package org.example.movie.model.function;
 
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.model.GenresModel;
 
 import java.io.Serializable;

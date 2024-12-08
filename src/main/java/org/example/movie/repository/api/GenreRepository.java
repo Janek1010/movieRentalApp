@@ -1,6 +1,6 @@
 package org.example.movie.repository.api;
 
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.repository.api.Repository;
 
 import java.util.UUID;

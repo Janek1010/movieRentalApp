@@ -1,6 +1,6 @@
 package org.example.movie.model.dto.function;
 
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.dto.PutMovieRequest;
 import org.example.user.entity.User;

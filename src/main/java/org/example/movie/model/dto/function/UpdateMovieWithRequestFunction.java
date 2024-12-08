@@ -15,6 +15,9 @@ public class UpdateMovieWithRequestFunction implements BiFunction<Movie, PatchMo
                 .movieFormat(patchMovieRequest.getMovieFormat())
                 .user(movie.getUser())
                 .genre(movie.getGenre())
+                .version(patchMovieRequest.getVersion())
+                .creationDateTime(movie.getCreationDateTime())
+                .updateDateTime(movie.getUpdateDateTime())
                 .build();
     }
 }

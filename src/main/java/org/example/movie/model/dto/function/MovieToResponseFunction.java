@@ -15,6 +15,7 @@ public class MovieToResponseFunction implements Function<Movie, GetMovieResponse
                 .movieFormat(entity.getMovieFormat())
                 .user(entity.getUser().toString())
                 .genre(entity.getGenre().toString())
+                .version(entity.getVersion())
                 .build();
     }
 }

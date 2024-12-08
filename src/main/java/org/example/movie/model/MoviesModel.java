@@ -4,6 +4,7 @@ import lombok.*;
 import org.example.movie.entity.MovieFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 @Getter
@@ -30,5 +31,8 @@ public class MoviesModel implements Serializable {
         private String title;
         private String director;
         private MovieFormat movieFormat;
+        private Long version;
+        private LocalDateTime creationDateTime;
+        private LocalDateTime updateDateTime;
     }
 }

@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.factories.ModelFunctionFactory;
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.model.GenreEditModel;
 import org.example.movie.service.GenreService;
 

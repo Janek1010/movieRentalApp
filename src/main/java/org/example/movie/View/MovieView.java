@@ -44,8 +44,10 @@ public class MovieView implements Serializable {
     public void init() throws IOException {
         Optional<Movie> movie = service.findMovieById(id);
         if (movie.isPresent()) {
+            System.out.println("prsent");
             this.movie = factory.movieToModel().apply(movie.get());
         } else {
+            System.out.println("not present");
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Movie not found");
         }
     }

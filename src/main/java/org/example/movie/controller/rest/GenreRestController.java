@@ -13,7 +13,6 @@ import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import org.example.factories.DtoFunctionFactory;
 import org.example.movie.controller.api.GenreController;
-import org.example.movie.entity.Genre;
 import org.example.movie.model.dto.GetGenreResponse;
 import org.example.movie.model.dto.GetGenresResponse;
 import org.example.movie.model.dto.PatchGenreRequest;
@@ -22,7 +21,6 @@ import org.example.movie.service.GenreService;
 import org.example.user.entity.UserRoles;
 
 import java.util.UUID;
-import java.util.logging.Level;
 
 @Path("")
 @Log

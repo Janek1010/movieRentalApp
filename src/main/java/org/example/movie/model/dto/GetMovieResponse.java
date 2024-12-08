@@ -19,4 +19,5 @@ public class GetMovieResponse {
     private MovieFormat movieFormat;
     private String genre;
     private String user;
+    private Long version;
 }

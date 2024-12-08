@@ -2,6 +2,9 @@ package org.example.movie.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.example.entity.VersionAndCreationDateAuditable;
+import org.example.genre.entity.Genre;
 import org.example.user.entity.User;
 
 import java.io.Serializable;
@@ -9,14 +12,14 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "movies")
-@ToString
-public class Movie implements Serializable {
+public class Movie extends VersionAndCreationDateAuditable implements Serializable {
     @Id
     private UUID id;
     private String title;

@@ -12,7 +12,7 @@ import jakarta.ws.rs.Path;
 import lombok.extern.java.Log;
 import org.example.factories.DtoFunctionFactory;
 import org.example.movie.controller.api.MovieController;
-import org.example.movie.entity.Genre;
+import org.example.genre.entity.Genre;
 import org.example.movie.entity.Movie;
 import org.example.movie.model.dto.GetMovieResponse;
 import org.example.movie.model.dto.GetMoviesResponse;

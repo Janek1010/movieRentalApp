@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{movieEdit.id}" required="true"/>
+        <f:viewAction action="#{movieEdit.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Edit weapon info</h2></header>
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <h:messages/>
+                    </div>
+                </div>
+
+                <h:panelGroup rendered="#{not empty movieEdit.unsavedMovie}">
+                    <div class="row">
+                        <div class="col-12 p-2">
+                            <h:outputText value="You attempted to update the following data:" styleClass="text-danger" />
+                            <ul>
+                                <li>
+                                    <strong>Title:</strong>
+                                    <h:outputText value="#{movieEdit.unsavedMovie.title}" />
+                                </li>
+                                <li>
+                                    <strong>Director:</strong>
+                                    <h:outputText value="#{movieEdit.unsavedMovie.director}" />
+                                </li>
+                                <li>
+                                    <strong>MovieFormat:</strong>
+                                    <h:outputText value="#{movieEdit.unsavedMovie.movieFormat}" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="title" value="#{movieEdit.movie.title}" styleClass="form-control"/>
+                            <h:outputLabel for="title" value="title:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="director" value="#{movieEdit.movie.director}" styleClass="form-control"/>
+                            <h:outputLabel for="director" value="director:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="movieFormat" value="#{movieEdit.movie.movieFormat}" styleClass="form-control"/>
+                            <h:outputLabel for="movieFormat" value="movieFormat:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                                         action="#{movieEdit.saveAction()}"/>
+                    </div>
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                    </div>
+                </div>
+            </h:form>
+        </article>
+    </ui:define>
+
+</ui:composition>

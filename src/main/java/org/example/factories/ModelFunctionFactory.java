@@ -42,4 +42,10 @@ public class ModelFunctionFactory {
     public MoviesToModelFunction moviesToModel() {
         return new MoviesToModelFunction();
     }
+    public MovieToEditModelFunction weaponToEditModel() {
+        return new MovieToEditModelFunction(userToModel());
+    }
+    public UpdateMovieWithModelFunction updateMovie(){
+        return new UpdateMovieWithModelFunction();
+    }
 }
